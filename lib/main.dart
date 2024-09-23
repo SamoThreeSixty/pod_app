@@ -25,12 +25,7 @@ void main() async {
     throw Exception('Supabase environment variables are not loaded properly.');
   }
 
-  await Supabase.initialize(
-    url: url,
-    anonKey: anonKey,
-  );
-
-  final supabaseClient = Supabase.instance.client;
+  final supabaseClient = SupabaseClient(url, anonKey);
 
   runApp(MultiBlocProvider(
     providers: [
@@ -38,12 +33,12 @@ void main() async {
         create: (_) => AuthBloc(
           signInWithEmailPassword: SignInWithEmailPassword(
             AuthRepositoryImp(
-              AuthRemoteDataSource(supabaseClient),
+              AuthRemoteDataSourceImp(supabaseClient),
             ),
           ),
           signOut: SignOut(
             AuthRepositoryImp(
-              AuthRemoteDataSource(supabaseClient),
+              AuthRemoteDataSourceImp(supabaseClient),
             ),
           ),
         ),
