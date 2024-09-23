@@ -49,7 +49,7 @@ void main() async {
         ),
       ),
     ],
-    child: Container(),
+    child: MyApp(),
   ));
 }
 
