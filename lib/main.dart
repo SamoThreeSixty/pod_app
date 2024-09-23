@@ -1,13 +1,20 @@
 import 'dart:developer';
 
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
+import 'package:pod_app/features/auth/data/datasources/auth_datasources.dart';
+import 'package:pod_app/features/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:pod_app/features/auth/data/repository/auth_repository_imp.dart';
+import 'package:pod_app/features/auth/domain/repository/auth_repository.dart';
+import 'package:pod_app/features/auth/domain/usecase/sign_in_with_email_password.dart';
+import 'package:pod_app/features/auth/domain/usecase/sign_out.dart';
+import 'package:pod_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pod_app/features/auth/presentation/pages/login_page.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  debugger();
 
   await dotenv.load(fileName: '.env');
 
@@ -23,7 +30,27 @@ void main() async {
     anonKey: anonKey,
   );
 
-  runApp(MyApp());
+  final supabaseClient = Supabase.instance.client;
+
+  runApp(MultiBlocProvider(
+    providers: [
+      BlocProvider(
+        create: (_) => AuthBloc(
+          signInWithEmailPassword: SignInWithEmailPassword(
+            AuthRepositoryImp(
+              AuthRemoteDataSource(supabaseClient),
+            ),
+          ),
+          signOut: SignOut(
+            AuthRepositoryImp(
+              AuthRemoteDataSource(supabaseClient),
+            ),
+          ),
+        ),
+      ),
+    ],
+    child: Container(),
+  ));
 }
 
 class MyApp extends StatelessWidget {

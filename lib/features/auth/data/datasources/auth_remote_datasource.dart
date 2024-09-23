@@ -2,10 +2,10 @@ import 'package:gotrue/src/types/user.dart';
 import 'package:pod_app/features/auth/data/datasources/auth_datasources.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class AuthRemoteDatasource implements AuthDatasources {
+class AuthRemoteDataSource implements AuthDataSource {
   final SupabaseClient supabaseClient;
 
-  AuthRemoteDatasource(this.supabaseClient);
+  AuthRemoteDataSource(this.supabaseClient);
 
   @override
   Future<User> login(String email, String password) async {

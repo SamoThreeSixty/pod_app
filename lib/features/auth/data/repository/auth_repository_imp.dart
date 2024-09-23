@@ -5,7 +5,7 @@ import 'package:pod_app/features/auth/data/datasources/auth_remote_datasource.da
 import 'package:pod_app/features/auth/domain/repository/auth_repository.dart';
 
 class AuthRepositoryImp implements AuthRepository {
-  final AuthRemoteDatasource remoteDataSource;
+  final AuthRemoteDataSource remoteDataSource;
   const AuthRepositoryImp(this.remoteDataSource);
 
   @override
