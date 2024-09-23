@@ -95,6 +95,7 @@ class _LoginPageState extends State<LoginPage> {
                 BlocListener<AuthBloc, AuthState>(
                   listener: (context, state) {
                     if (state is AuthLoading) {
+                      // Show the loading dialog
                       showDialog(
                         context: context,
                         barrierDismissible: false,
@@ -104,14 +105,30 @@ class _LoginPageState extends State<LoginPage> {
                           );
                         },
                       );
-                    } else if (state is AuthLoggedIn) {
-                      Text("Logged in");
-                    } else if (state is AuthFailure) {
-                      Text("login failure");
+                    } else if (state is AuthLoggedIn || state is AuthFailure) {
+                      // Close the loading dialog if it's open
+                      Navigator.of(context, rootNavigator: true).pop();
+
+                      if (state is AuthFailure) {
+                        // Show an error dialog or message
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(content: Text('Login failed')),
+                        );
+                      }
                     }
                   },
-                  child: Container(),
-                ),
+                  child: BlocBuilder<AuthBloc, AuthState>(
+                    builder: (context, state) {
+                      if (state is AuthLoggedIn) {
+                        return Text("Logged in");
+                      } else if (state is AuthFailure) {
+                        return Text("Login failure");
+                      }
+                      // Initial or idle state UI
+                      return Container(); // Show empty container or default login form
+                    },
+                  ),
+                )
               ],
             ),
           ),

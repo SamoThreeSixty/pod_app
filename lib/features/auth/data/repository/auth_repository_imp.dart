@@ -1,16 +1,19 @@
 import 'package:fpdart/src/either.dart';
 import 'package:gotrue/src/types/user.dart';
 import 'package:pod_app/core/event/events.dart';
+import 'package:pod_app/features/auth/data/datasources/auth_datasources.dart';
 import 'package:pod_app/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:pod_app/features/auth/domain/repository/auth_repository.dart';
 
 class AuthRepositoryImp implements AuthRepository {
-  final AuthRemoteDataSource remoteDataSource;
+  final AuthDataSource remoteDataSource;
   const AuthRepositoryImp(this.remoteDataSource);
 
   @override
-  Future<Either<Failure, User>> signInWithEmailPassword(
-      {required String email, required String password}) async {
+  Future<Either<Failure, User>> signInWithEmailPassword({
+    required String email,
+    required String password,
+  }) async {
     try {
       final user = await remoteDataSource.login(email, password);
 
