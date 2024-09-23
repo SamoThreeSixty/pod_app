@@ -1,35 +1,36 @@
+import 'dart:developer';
+
 import 'package:gotrue/src/types/user.dart';
+import 'package:pod_app/core/event/events.dart';
 import 'package:pod_app/features/auth/data/datasources/auth_datasources.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class AuthRemoteDataSource implements AuthDataSource {
-  final SupabaseClient supabaseClient;
+class AuthRemoteDataSourceImp implements AuthDataSource {
+  final SupabaseClient _supabaseClient;
 
-  AuthRemoteDataSource(this.supabaseClient);
+  AuthRemoteDataSourceImp(this._supabaseClient);
 
   @override
   Future<User> login(String email, String password) async {
     try {
-      final response = await supabaseClient.auth
+      final response = await _supabaseClient.auth
           .signInWithPassword(password: password, email: email);
 
-      if (response.user != null) {
-        return response.user!;
-      } else {
-        throw Exception('Login failed');
-      }
+      if (response.user == null) throw const ServerException('User is null');
+
+      return response.user!;
     } catch (e) {
       print(e);
-      throw Exception('Failed to login');
+      throw const ServerException('Failed to login');
     }
   }
 
   @override
   Future<void> logout() async {
     try {
-      await supabaseClient.auth.signOut();
+      await _supabaseClient.auth.signOut();
     } catch (e) {
-      throw Exception('Failed to log out');
+      throw const ServerException('Failed to log out');
     }
   }
 }
