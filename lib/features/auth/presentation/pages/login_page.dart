@@ -36,12 +36,34 @@ class _LoginPageState extends State<LoginPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10.0),
           child: SingleChildScrollView(
-        child: Form(
-            key: formKey,
             child: Column(
               children: [
-                Text("sign in"),
+                SizedBox(
+                  height: MediaQuery.of(context).size.height / 4,
+                ),
+                Column(
+                  children: [
+                    Container(
+                      constraints: const BoxConstraints(
+                        maxWidth: 150,
+                      ),
+                      decoration: const BoxDecoration(
+                        color: Colors.transparent,
+                      ),
+                      child: Image(
+                        image:
+                            AssetImage('assets/images/3.0x/flutter_logo.png'),
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 50,
+                    ),
+                  ],
+                ),
+                Text("Sign in"),
                 AuthField(
                   hintText: 'Email',
                   controller: emailController,
@@ -53,18 +75,20 @@ class _LoginPageState extends State<LoginPage> {
                   icon: Icon(Icons.password),
                   isObscureText: true,
                 ),
-                const SizedBox(
-                  height: 30.0,
-                ),
+                const SizedBox(height: 30.0),
                 ElevatedButton(
                   onPressed: () {
-                    if (formKey.currentState!.validate()) {}
+                    if (formKey.currentState!.validate()) {
+                      // Handle login logic here
+                    }
                   },
                   child: const Text('Login'),
                 ),
               ],
-            )),
-      )),
+            ),
+          ),
+        ),
+      ),
     );
   }
 }
