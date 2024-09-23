@@ -7,6 +7,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pod_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pod_app/features/auth/presentation/pages/register_account.dart';
 import 'package:pod_app/features/auth/presentation/widgets/auth_field.dart';
+import 'package:pod_app/features/delivery_list/presentation/pages/delivery_list.dart';
 import 'package:pod_app/main.dart';
 
 class LoginPage extends StatefulWidget {
@@ -138,6 +139,18 @@ class _LoginPageState extends State<LoginPage> {
                     // Close the loading dialog if it's open
                     Navigator.of(context, rootNavigator: true).pop();
 
+                    if (state is AuthLoggedIn) {
+                      // TODO: Add a check that will make sure if the user has an associated company or not
+
+                      Navigator.of(context).pushReplacement(
+                        MaterialPageRoute(
+                          builder: (builder) {
+                            return DeliveryList();
+                          },
+                        ),
+                      );
+                    }
+
                     if (state is AuthFailure) {
                       // Show an error dialog or message
                       ScaffoldMessenger.of(context).showSnackBar(
@@ -146,18 +159,8 @@ class _LoginPageState extends State<LoginPage> {
                     }
                   }
                 },
-                child: BlocBuilder<AuthBloc, AuthState>(
-                  builder: (context, state) {
-                    if (state is AuthLoggedIn) {
-                      return Text("Logged in");
-                    } else if (state is AuthFailure) {
-                      return Text("Login failure");
-                    }
-                    // Initial or idle state UI
-                    return Container(); // Show empty container or default login form
-                  },
-                ),
-              )
+                child: Container(),
+              ),
             ],
           ),
         ),
