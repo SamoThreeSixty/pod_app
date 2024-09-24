@@ -1,6 +1,6 @@
 import 'package:pod_app/features/delivery_list/domain/entity/delivery_header.dart';
 
-const String tableEventLog = 'delivery_header';
+const String tableDeliveryHeader = 'delivery_header';
 
 class DeliveryHeaderFields {
   static final List<String> values = [
@@ -36,7 +36,7 @@ class DeliveryHeaderFields {
   static const String vehicle_id = 'vehicle_id';
 }
 
-class EventLogDto {
+class DeliveryHeaderDto {
   final int? id;
   final int status;
   final DateTime created_at;
@@ -53,7 +53,7 @@ class EventLogDto {
   final int vehicle_id;
 
   //TODO: what is this const method doing. Is it basically a constructor?
-  const EventLogDto({
+  const DeliveryHeaderDto({
     this.id,
     required this.status,
     required this.created_at,
@@ -71,7 +71,7 @@ class EventLogDto {
   });
 
   // TODO: what does this do, does it create a deep copy?
-  EventLogDto copy({
+  DeliveryHeaderDto copy({
     int? id,
     int? status,
     DateTime? created_at,
@@ -87,7 +87,7 @@ class EventLogDto {
     int? route_id,
     int? vehicle_id,
   }) =>
-      EventLogDto(
+      DeliveryHeaderDto(
         id: id ?? this.id,
         status: status ?? this.status,
         created_at: created_at ?? this.created_at,
