@@ -1,7 +1,12 @@
 import 'package:pod_app/features/delivery_list/data/datasources/delivery_data_datasource.dart';
+import 'package:pod_app/features/delivery_list/data/model/delivery_header_model.dart';
 import 'package:pod_app/features/delivery_list/domain/entity/delivery_header.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class DeliveryDataRemoteDatasource implements DeliveryDataDataSource {
+  SupabaseClient supabaseClient;
+
+  DeliveryDataRemoteDatasource(this.supabaseClient);
   @override
   Future<void> changeDeliveryStatus(int id, int status) {
     // TODO: implement changeDeliveryStatus
@@ -15,9 +20,17 @@ class DeliveryDataRemoteDatasource implements DeliveryDataDataSource {
   }
 
   @override
-  Future<List<DeliveryHeader>> getAllDeliveries() {
-    // TODO: implement getAllDeliveries
-    throw UnimplementedError();
+  Future<List<DeliveryHeader>> getAllDeliveries() async {
+    try {
+      final List<dynamic> response =
+          await supabaseClient.from('delivery_header').select();
+
+      return response
+          .map((deliveryHeader) => DeliveryHeaderModel.fromJson(deliveryHeader))
+          .toList();
+    } catch (e) {
+      throw Exception('Error loading from Supabase');
+    }
   }
 
   @override
