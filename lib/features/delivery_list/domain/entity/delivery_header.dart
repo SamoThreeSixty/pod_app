@@ -9,8 +9,8 @@ class DeliveryHeader {
   final String region;
   final String postcode;
   final String country;
-  final int lat;
-  final int long;
+  final double lat;
+  final double long;
   final int route_id;
   final int vehicle_id;
 

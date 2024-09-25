@@ -32,10 +32,10 @@ class DeliveryHeaderModel extends DeliveryHeader {
       region: json['region'] as String ?? '',
       postcode: json['postcode'] as String ?? '',
       country: json['country'] as String ?? '',
-      lat: json['lat'] as int ?? 0,
-      long: json['long'] as int ?? 0,
-      route_id: json['route_id'] as int ?? 0,
-      vehicle_id: json['vehicle_id'] as int ?? 0,
+      lat: json['lat'] as double ?? 0.0,
+      long: json['long'] as double ?? 0.0,
+      route_id: json['route_id'] as int? ?? 0,
+      vehicle_id: json['vehicle_id'] as int? ?? 0,
     );
   }
 
