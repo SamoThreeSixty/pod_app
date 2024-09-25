@@ -11,6 +11,11 @@ import 'package:pod_app/features/auth/domain/usecase/sign_in_with_email_password
 import 'package:pod_app/features/auth/domain/usecase/sign_out.dart';
 import 'package:pod_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pod_app/features/auth/presentation/pages/login_page.dart';
+import 'package:pod_app/features/delivery_list/data/datasources/delivery_remote_datasource.dart';
+import 'package:pod_app/features/delivery_list/data/repository/delivery_list_repository_imp.dart';
+import 'package:pod_app/features/delivery_list/domain/repository/delivery_header_repository.dart';
+import 'package:pod_app/features/delivery_list/domain/usecases/get_all_delivery_headers.dart';
+import 'package:pod_app/features/delivery_list/presentation/bloc/delivery_list_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
@@ -27,25 +32,36 @@ void main() async {
 
   final supabaseClient = SupabaseClient(url, anonKey);
 
-  runApp(MultiBlocProvider(
-    providers: [
-      BlocProvider(
-        create: (_) => AuthBloc(
-          signInWithEmailPassword: SignInWithEmailPassword(
-            AuthRepositoryImp(
-              AuthRemoteDataSourceImp(supabaseClient),
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => AuthBloc(
+            signInWithEmailPassword: SignInWithEmailPassword(
+              AuthRepositoryImp(
+                AuthRemoteDataSourceImp(supabaseClient),
+              ),
             ),
-          ),
-          signOut: SignOut(
-            AuthRepositoryImp(
-              AuthRemoteDataSourceImp(supabaseClient),
+            signOut: SignOut(
+              AuthRepositoryImp(
+                AuthRemoteDataSourceImp(supabaseClient),
+              ),
             ),
           ),
         ),
-      ),
-    ],
-    child: MyApp(),
-  ));
+        BlocProvider(
+          create: (_) => DeliveryListBloc(
+            getAllDeliveryList: GetAllDeliveryHeaders(
+              DeliveryListRepositoryImp(
+                DeliveryListRemoteDataSource(supabaseClient),
+              ),
+            ),
+          ),
+        ),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
