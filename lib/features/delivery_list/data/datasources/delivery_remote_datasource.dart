@@ -1,12 +1,12 @@
-import 'package:pod_app/features/delivery_list/data/datasources/delivery_data_datasource.dart';
+import 'package:pod_app/features/delivery_list/data/datasources/delivery_datasource.dart';
 import 'package:pod_app/features/delivery_list/data/model/delivery_header_model.dart';
 import 'package:pod_app/features/delivery_list/domain/entity/delivery_header.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
-class DeliveryDataRemoteDatasource implements DeliveryDataDataSource {
+class DeliveryListRemoteDataSource implements DeliveryListDataSource {
   SupabaseClient supabaseClient;
 
-  DeliveryDataRemoteDatasource(this.supabaseClient);
+  DeliveryListRemoteDataSource(this.supabaseClient);
   @override
   Future<void> changeDeliveryStatus(int id, int status) {
     // TODO: implement changeDeliveryStatus

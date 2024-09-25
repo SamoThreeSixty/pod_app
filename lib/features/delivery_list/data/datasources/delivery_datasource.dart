@@ -1,6 +1,6 @@
 import 'package:pod_app/features/delivery_list/domain/entity/delivery_header.dart';
 
-abstract interface class DeliveryDataDataSource {
+abstract interface class DeliveryListDataSource {
   Future<List<DeliveryHeader>> getAllDeliveries();
 
   Future<List<DeliveryHeader>> getFilteredDeliveries();

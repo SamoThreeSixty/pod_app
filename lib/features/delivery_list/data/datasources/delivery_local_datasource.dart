@@ -1,7 +1,7 @@
-import 'package:pod_app/features/delivery_list/data/datasources/delivery_data_datasource.dart';
+import 'package:pod_app/features/delivery_list/data/datasources/delivery_datasource.dart';
 import 'package:pod_app/features/delivery_list/domain/entity/delivery_header.dart';
 
-class DeliveryDataLocalDatasource implements DeliveryDataDataSource {
+class DeliveryListLocalDataSource implements DeliveryListDataSource {
   @override
   Future<void> changeDeliveryStatus(int id, int status) {
     // TODO: implement changeDeliveryStatus
