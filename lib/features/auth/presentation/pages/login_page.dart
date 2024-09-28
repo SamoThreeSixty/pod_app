@@ -146,9 +146,9 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (builder) {
-                            return const PageWithDrawer(
+                            return PageWithDrawer(
                               title: 'PoD Application',
-                              body: DeliveryList(),
+                              body: const DeliveryList(),
                             );
                           },
                         ),

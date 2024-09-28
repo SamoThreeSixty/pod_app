@@ -1,14 +1,17 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pod_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pod_app/features/auth/presentation/pages/login_page.dart';
+import 'package:pod_app/features/delivery_list/presentation/pages/delivery_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class PageWithDrawer extends StatefulWidget {
-  const PageWithDrawer({super.key, required this.title, required this.body});
+  PageWithDrawer({super.key, required this.title, required this.body});
 
   final String title;
-  final Widget body;
+  Widget body;
 
   @override
   State<PageWithDrawer> createState() => _PageWithDrawerState();
@@ -18,7 +21,13 @@ class MenuOptions {
   final String option;
   final String route;
   final Icon icon;
-  MenuOptions({required this.option, required this.route, required this.icon});
+  final Widget widget;
+  MenuOptions({
+    required this.option,
+    required this.route,
+    required this.icon,
+    required this.widget,
+  });
 }
 
 class _PageWithDrawerState extends State<PageWithDrawer> {
@@ -41,21 +50,29 @@ class _PageWithDrawerState extends State<PageWithDrawer> {
 
   final List<MenuOptions> menuOptions = [
     MenuOptions(
-        option: 'Deliveries',
-        route: 'deliveries',
-        icon: const Icon(Icons.drive_eta)),
+      option: 'Deliveries',
+      route: 'deliveries',
+      icon: const Icon(Icons.drive_eta),
+      widget: const DeliveryList(),
+    ),
     MenuOptions(
-        option: 'Download Orders',
-        route: 'download_orders',
-        icon: const Icon(Icons.download)),
+      option: 'Download Orders',
+      route: 'download_orders',
+      widget: Container(),
+      icon: const Icon(Icons.download),
+    ),
     MenuOptions(
-        option: 'View Cache',
-        route: 'view_cache',
-        icon: const Icon(Icons.cached)),
+      option: 'View Cache',
+      route: 'view_cache',
+      widget: Container(),
+      icon: const Icon(Icons.cached),
+    ),
     MenuOptions(
-        option: 'Image Upload',
-        route: 'image_upload',
-        icon: const Icon(Icons.upload)),
+      option: 'Image Upload',
+      route: 'image_upload',
+      widget: Container(),
+      icon: const Icon(Icons.upload),
+    ),
   ];
 
   final bool themeProvider = false;
@@ -90,13 +107,16 @@ class _PageWithDrawerState extends State<PageWithDrawer> {
       drawer: Drawer(
         child: Column(
           children: <Widget>[
-            const SizedBox(
+            SizedBox(
               child: DrawerHeader(
+                decoration: const BoxDecoration(
+                  color: Colors.blue,
+                ),
                 child: SizedBox(
                   width: double.infinity,
                   child: Column(
                     children: [
-                      Row(
+                      const Row(
                         children: [
                           SizedBox(
                             child: Text(
@@ -111,16 +131,22 @@ class _PageWithDrawerState extends State<PageWithDrawer> {
                           ),
                         ],
                       ),
-                      Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Sam Bradshaw',
-                            style: TextStyle(color: Colors.white),
-                          ),
-                          Text('sam@logma.co.uk',
-                              style: TextStyle(color: Colors.white)),
-                        ],
+                      BlocBuilder<AuthBloc, AuthState>(
+                        builder: (context, state) {
+                          if (state is AuthLoggedIn) {
+                            final String email = state.user.email!;
+
+                            return Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    email,
+                                    style: const TextStyle(color: Colors.white),
+                                  ),
+                                ]);
+                          }
+                          return Container();
+                        },
                       ),
                     ],
                   ),
@@ -141,6 +167,7 @@ class _PageWithDrawerState extends State<PageWithDrawer> {
                       // TODO: Add routing
                       setState(() {
                         currentIndex = index;
+                        widget.body = option.widget;
                       });
                     },
                   );
