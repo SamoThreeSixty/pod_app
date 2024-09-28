@@ -7,6 +7,7 @@ class DeliveryListRemoteDataSource implements DeliveryListDataSource {
   SupabaseClient supabaseClient;
 
   DeliveryListRemoteDataSource(this.supabaseClient);
+
   @override
   Future<void> changeDeliveryStatus(int id, int status) {
     // TODO: implement changeDeliveryStatus
