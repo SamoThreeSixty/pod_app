@@ -16,7 +16,7 @@ class DeliveryRecord extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => {
-        if (delivery.status == 1)
+        if (delivery.status == 0)
           {
             Navigator.of(context).push(
               MaterialPageRoute(
