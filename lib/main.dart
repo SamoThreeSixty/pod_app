@@ -16,6 +16,11 @@ import 'package:pod_app/features/delivery_list/data/repository/delivery_list_rep
 import 'package:pod_app/features/delivery_list/domain/repository/delivery_header_repository.dart';
 import 'package:pod_app/features/delivery_list/domain/usecases/get_all_delivery_headers.dart';
 import 'package:pod_app/features/delivery_list/presentation/bloc/delivery_list_bloc.dart';
+import 'package:pod_app/features/delivery_record/data/datasource/delivery_detail_remote_data_source.dart';
+import 'package:pod_app/features/delivery_record/data/repository/delivery_detail_repository_impl.dart';
+import 'package:pod_app/features/delivery_record/domain/repository/delivery_detail_repository.dart';
+import 'package:pod_app/features/delivery_record/domain/usecase/get_delivery_detail.dart';
+import 'package:pod_app/features/delivery_record/presentation/bloc/delivery_detail_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
@@ -54,6 +59,15 @@ void main() async {
             getAllDeliveryList: GetAllDeliveryHeaders(
               DeliveryListRepositoryImp(
                 DeliveryListRemoteDataSource(supabaseClient),
+              ),
+            ),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => DeliveryDetailBloc(
+            getDeliveryDetail: GetDeliveryDetail(
+              DeliveryDetailRepositoryImpl(
+                DeliveryDetailRemoteDateSource(supabaseClient),
               ),
             ),
           ),
