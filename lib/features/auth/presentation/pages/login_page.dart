@@ -4,6 +4,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pod_app/core/common/widgets/app_page_with_drawer.dart';
 import 'package:pod_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pod_app/features/auth/presentation/pages/register_account.dart';
 import 'package:pod_app/features/auth/presentation/widgets/auth_field.dart';
@@ -62,7 +63,7 @@ class _LoginPageState extends State<LoginPage> {
                   decoration: const BoxDecoration(
                     color: Colors.transparent,
                   ),
-                  child: Image(
+                  child: const Image(
                     image: AssetImage('assets/images/3.0x/flutter_logo.png'),
                   ),
                 ),
@@ -70,16 +71,16 @@ class _LoginPageState extends State<LoginPage> {
               const SizedBox(
                 height: 50,
               ),
-              Text("Sign in"),
+              const Text("Sign in"),
               AuthField(
                 hintText: 'Email',
                 controller: emailController,
-                icon: Icon(Icons.person),
+                icon: const Icon(Icons.person),
               ),
               AuthField(
                 hintText: 'Password',
                 controller: passwordController,
-                icon: Icon(Icons.lock),
+                icon: const Icon(Icons.lock),
                 isObscureText: true,
               ),
               const SizedBox(height: 30.0),
@@ -96,7 +97,7 @@ class _LoginPageState extends State<LoginPage> {
                 },
                 child: const Text('Login'),
               ),
-              SizedBox(
+              const SizedBox(
                 height: 20,
               ),
               GestureDetector(
@@ -104,14 +105,14 @@ class _LoginPageState extends State<LoginPage> {
                   Navigator.of(context).push(
                     MaterialPageRoute(
                       builder: (builder) {
-                        return SignupPage();
+                        return const SignupPage();
                       },
                     ),
                   );
                 },
                 child: Column(
                   children: [
-                    Text("Need an account? "),
+                    const Text("Need an account? "),
                     Padding(
                       padding: const EdgeInsets.all(4.0),
                       child: Text(
@@ -145,7 +146,10 @@ class _LoginPageState extends State<LoginPage> {
                       Navigator.of(context).pushReplacement(
                         MaterialPageRoute(
                           builder: (builder) {
-                            return DeliveryList();
+                            return const PageWithDrawer(
+                              title: 'PoD Application',
+                              body: DeliveryList(),
+                            );
                           },
                         ),
                       );
@@ -154,7 +158,7 @@ class _LoginPageState extends State<LoginPage> {
                     if (state is AuthFailure) {
                       // Show an error dialog or message
                       ScaffoldMessenger.of(context).showSnackBar(
-                        SnackBar(content: Text('Login failed')),
+                        const SnackBar(content: Text('Login failed')),
                       );
                     }
                   }
