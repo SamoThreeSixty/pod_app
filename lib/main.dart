@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
+import 'package:pod_app/core/common/cubits/cubit/app_theme_cubit.dart';
 import 'package:pod_app/features/auth/data/datasources/auth_datasources.dart';
 import 'package:pod_app/features/auth/data/datasources/auth_remote_datasource.dart';
 import 'package:pod_app/features/auth/data/repository/auth_repository_imp.dart';
@@ -72,6 +73,9 @@ void main() async {
             ),
           ),
         ),
+        BlocProvider(
+          create: (context) => ThemeCubit(),
+        )
       ],
       child: const MyApp(),
     ),
@@ -83,10 +87,17 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
-      title: 'PoD Application',
-      debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+    return BlocBuilder<ThemeCubit, ThemeMode>(
+      builder: (context, themeMode) {
+        return MaterialApp(
+          title: 'PoD Application',
+          debugShowCheckedModeBanner: false,
+          themeMode: themeMode,
+          theme: ThemeData.light(),
+          darkTheme: ThemeData.dark(),
+          home: const LoginPage(),
+        );
+      },
     );
   }
 }
