@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:pod_app/features/delivery_list/data/database/delivery_header_dto.dart';
 import 'package:pod_app/features/delivery_list/domain/entity/delivery_header.dart';
+import 'package:pod_app/features/delivery_list/presentation/widgets/status_pill.dart';
 import 'package:pod_app/features/delivery_record/presentation/pages/delivery_page.dart';
 import 'package:pod_app/features/delivery_record/presentation/pages/process_delivery_page.dart';
 
@@ -121,59 +122,9 @@ class DeliveryRecord extends StatelessWidget {
             Positioned(
               right: 0,
               top: 0,
-              child: _StatusPill(status: delivery.status),
+              child: StatusPill(status: delivery.status),
             ),
           ],
-        ),
-      ),
-    );
-  }
-}
-
-class _StatusPill extends StatelessWidget {
-  final int status;
-
-  const _StatusPill({required this.status});
-
-  @override
-  Widget build(BuildContext context) {
-    Color color;
-    String displayText;
-
-    switch (status) {
-      case 1:
-        color = Colors.blue;
-        displayText = 'Active';
-        break;
-      case 2:
-        color = Colors.red;
-        displayText = 'Failed';
-        break;
-      case 3:
-        color = Colors.green;
-        displayText = 'Complete';
-        break;
-      case 4:
-        color = Colors.orange;
-        displayText = 'Part Done';
-        break;
-      default:
-        color = Colors.grey;
-        displayText = 'Unknown';
-    }
-
-    return Container(
-      padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 6.0),
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(12.0),
-      ),
-      child: Text(
-        displayText,
-        style: const TextStyle(
-          color: Colors.white,
-          fontWeight: FontWeight.bold,
-          fontSize: 8,
         ),
       ),
     );
