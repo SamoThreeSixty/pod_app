@@ -5,6 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:pod_app/core/service/file_service.dart';
 import 'package:pod_app/core/service/supabase_storage.dart';
+import 'package:pod_app/features/delivery_record/presentation/widgets/icon_buttons.dart';
+import 'package:pod_app/features/delivery_record/presentation/widgets/image_thumbnail.dart';
 import 'package:signature/signature.dart';
 
 class ProcessDeliveryPage extends StatefulWidget {
