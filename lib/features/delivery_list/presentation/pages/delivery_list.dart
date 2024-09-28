@@ -31,7 +31,6 @@ class _DeliveryListState extends State<DeliveryList> {
       body: BlocBuilder<DeliveryListBloc, DeliveryListState>(
         builder: (context, state) {
           if (state is DeliveryListSuccess) {
-            debugger();
             // Going to get a array containing a list of 2 deliveries
             final deliveryPairs = <List<DeliveryHeader>>[];
 
