@@ -1,8 +1,10 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:pod_app/features/delivery_list/data/database/delivery_header_dto.dart';
 import 'package:pod_app/features/delivery_list/domain/entity/delivery_header.dart';
 import 'package:pod_app/features/delivery_record/presentation/pages/delivery_page.dart';
+import 'package:pod_app/features/delivery_record/presentation/pages/process_delivery_page.dart';
 
 class DeliveryRecord extends StatelessWidget {
   final DeliveryHeader delivery;
@@ -13,24 +15,24 @@ class DeliveryRecord extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () => {
-        // if (true)
-        //   {
-        //     Navigator.of(context).push(
-        //       MaterialPageRoute(
-        //         builder: (context) => const ProcessDeliveryPage(),
-        //       ),
-        //     ),
-        //   }
-        // else
-        //   {
-        Navigator.of(context).push(
-          MaterialPageRoute(
-            builder: (context) => DeliveryDetailPage(
-              deliveryHeader: delivery,
+        if (delivery.status == 1)
+          {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => const ProcessDeliveryPage(),
+              ),
             ),
-          ),
-        ),
-        // }
+          }
+        else
+          {
+            Navigator.of(context).push(
+              MaterialPageRoute(
+                builder: (context) => DeliveryDetailPage(
+                  deliveryHeader: delivery,
+                ),
+              ),
+            ),
+          }
       },
       child: Container(
         margin: const EdgeInsets.symmetric(
@@ -116,10 +118,10 @@ class DeliveryRecord extends StatelessWidget {
                 ),
               ],
             ),
-            const Positioned(
+            Positioned(
               right: 0,
               top: 0,
-              child: _StatusPill(status: 'Active'),
+              child: _StatusPill(status: delivery.status),
             ),
           ],
         ),
@@ -129,7 +131,7 @@ class DeliveryRecord extends StatelessWidget {
 }
 
 class _StatusPill extends StatelessWidget {
-  final String status;
+  final int status;
 
   const _StatusPill({required this.status});
 
@@ -138,20 +140,20 @@ class _StatusPill extends StatelessWidget {
     Color color;
     String displayText;
 
-    switch (status.toLowerCase()) {
-      case 'active':
+    switch (status) {
+      case 1:
         color = Colors.blue;
         displayText = 'Active';
         break;
-      case 'failed':
+      case 2:
         color = Colors.red;
         displayText = 'Failed';
         break;
-      case 'complete':
+      case 3:
         color = Colors.green;
         displayText = 'Complete';
         break;
-      case 'part done':
+      case 4:
         color = Colors.orange;
         displayText = 'Part Done';
         break;
