@@ -116,8 +116,8 @@ class DeliveryHeaderDto {
         region: json['region'] as String,
         postcode: json['postcode'] as String,
         country: json['country'] as String,
-        lat: json['lat'] as int,
-        long: json['long'] as int,
+        lat: json['lat'] as double,
+        long: json['long'] as double,
         route_id: json['route_id'] as int,
         vehicle_id: json['vehicle_id'] as int,
       );
