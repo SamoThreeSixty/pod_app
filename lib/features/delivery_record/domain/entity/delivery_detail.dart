@@ -6,10 +6,10 @@ class DeliveryDetail {
   final String stock_ref;
   final int quantity;
   final String unit;
-  final bool loaded;
-  final DateTime loaded_date;
+  bool loaded;
+  final DateTime? loaded_date;
   final bool delivered;
-  final DateTime delivered_date;
+  final DateTime? delivered_date;
 
   DeliveryDetail({
     required this.id,

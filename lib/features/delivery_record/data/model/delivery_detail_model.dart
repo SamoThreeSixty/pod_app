@@ -25,9 +25,13 @@ class DeliveryDetailModel extends DeliveryDetail {
       quantity: json['quantity'] as int? ?? 0,
       unit: json['unit'] as String? ?? "",
       loaded: json['loaded'] as bool? ?? false,
-      loaded_date: DateTime.parse(json['loaded_date']),
+      loaded_date: json['loaded_date'] != null
+          ? DateTime.parse(json['loaded_date'])
+          : null,
       delivered: json['delivered'] as bool? ?? false,
-      delivered_date: DateTime.parse(json['delivered_date']),
+      delivered_date: json['delivered_date'] != null
+          ? DateTime.parse(json['delivered_date'])
+          : null,
     );
   }
 }
