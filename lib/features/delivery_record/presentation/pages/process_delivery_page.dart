@@ -1,18 +1,9 @@
-import 'dart:developer';
-import 'dart:io';
-
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'package:pod_app/core/service/file_service.dart';
-import 'package:pod_app/core/service/supabase_storage.dart';
 import 'package:pod_app/features/delivery_list/domain/entity/delivery_header.dart';
-import 'package:pod_app/features/delivery_record/presentation/widgets/icon_buttons.dart';
-import 'package:pod_app/features/delivery_record/presentation/widgets/image_thumbnail.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/step_controls.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/step_images.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/step_items.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/step_sign.dart';
-import 'package:signature/signature.dart';
 
 class ProcessDeliveryPage extends StatefulWidget {
   final DeliveryHeader deliveryHeader;
