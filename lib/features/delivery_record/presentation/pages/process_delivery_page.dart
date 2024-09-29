@@ -7,6 +7,7 @@ import 'package:pod_app/core/service/file_service.dart';
 import 'package:pod_app/core/service/supabase_storage.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/icon_buttons.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/image_thumbnail.dart';
+import 'package:pod_app/features/delivery_record/presentation/widgets/step_controls.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/step_images.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/step_items.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/step_sign.dart';
@@ -102,46 +103,27 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(120, 55),
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                  ),
-                  onPressed: () {
-                    switch (currentStep) {
-                      case 0:
-                        Navigator.pop(context);
-                        break;
-                      case 1:
-                        setState(() => currentStep -= 1);
-                        break;
-                      case 2:
-                        setState(() => currentStep -= 1);
-                        break;
-                    }
+                StepControls(
+                  cancelSteps: () {
+                    Navigator.pop(context);
                   },
-                  child: const Text('Back'),
+                  changeStep: (newStep) {
+                    setState(() {
+                      currentStep = newStep;
+                    });
+                  },
+                  currentStep: currentStep,
+                  action: 'Back',
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    fixedSize: const Size(120, 55),
-                    backgroundColor: Colors.transparent,
-                    shadowColor: Colors.transparent,
-                  ),
-                  onPressed: () {
-                    switch (currentStep) {
-                      case 0:
-                        setState(() => currentStep += 1);
-                        break;
-                      case 1:
-                        setState(() => currentStep += 1);
-                        break;
-                      case 2:
-                        break;
-                    }
+                StepControls(
+                  completeSteps: () => print("completed it mate"),
+                  changeStep: (newStep) {
+                    setState(() {
+                      currentStep = newStep;
+                    });
                   },
-                  child: const Text('Next'),
+                  currentStep: currentStep,
+                  action: 'Next',
                 ),
               ],
             ),
