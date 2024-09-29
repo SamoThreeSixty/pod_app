@@ -47,9 +47,11 @@ class _StepImagesState extends State<StepImages> {
             runAlignment: WrapAlignment.start,
             spacing: 8.0,
             runSpacing: 8.0,
-            children: selectedImages.map((image) {
-              return ImageThumbnail(selectedImage: image);
-            }).toList(),
+            children: selectedImages.map(
+              (image) {
+                return ImageThumbnail(selectedImage: image);
+              },
+            ).toList(),
           ),
         ),
       ],
