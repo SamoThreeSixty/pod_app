@@ -48,21 +48,34 @@ class _ConnectivityStateState extends State<ConnectivityState> {
         builder: (context) {
           switch (_connectivityStatus) {
             case ConnectivityResult.none:
-              return circleIcon(Colors.red, Icons.wifi_off);
+              return circleIcon(
+                  Colors.red, Icons.wifi_off, _connectivityStatus);
             case ConnectivityResult.mobile || ConnectivityResult.wifi:
-              return circleIcon(Colors.green, Icons.wifi);
+              return circleIcon(Colors.green, Icons.wifi, _connectivityStatus);
             default:
-              return circleIcon(Colors.amber, Icons.abc_sharp);
+              return circleIcon(
+                  Colors.amber, Icons.abc_sharp, _connectivityStatus);
           }
         },
       ),
     );
   }
 
-  GestureDetector circleIcon(Color color, IconData icon) {
+  GestureDetector circleIcon(
+      Color color, IconData icon, ConnectivityResult status) {
     return GestureDetector(
       onTap: () {
-        print('Green button pressed');
+        switch (status) {
+          case ConnectivityResult.none:
+            _showDetailsDialog(
+                context, 'You are not connected to the internet.');
+
+          case ConnectivityResult.mobile || ConnectivityResult.wifi:
+            _showDetailsDialog(context, 'You are connected to the internet.');
+
+          default:
+            _showDetailsDialog(context, 'Unsure of this connection.');
+        }
       },
       child: Container(
         width: 30,
@@ -84,6 +97,17 @@ class _ConnectivityStateState extends State<ConnectivityState> {
           color: Colors.white,
         ), // Use an icon to make it more button-like
       ),
+    );
+  }
+
+  void _showDetailsDialog(BuildContext context, String title) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text(title),
+        );
+      },
     );
   }
 }
