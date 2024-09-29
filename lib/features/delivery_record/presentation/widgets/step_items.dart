@@ -1,7 +1,14 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:pod_app/features/delivery_record/domain/entity/delivery_detail.dart';
+import 'package:pod_app/features/delivery_record/presentation/bloc/delivery_detail_bloc.dart';
 
 class StepItems extends StatefulWidget {
-  const StepItems({super.key});
+  final int deliveryHeaderId;
+
+  const StepItems({super.key, required this.deliveryHeaderId});
 
   @override
   State<StepItems> createState() => _StepItemsState();
@@ -45,6 +52,8 @@ class _StepItemsState extends State<StepItems> {
                 ),
               )
             : Container(),
+        selectedButton == 0 ? lineItems(false) : Container(),
+        selectedButton == 1 ? lineItems(true) : Container(),
       ],
     );
   }
@@ -64,6 +73,12 @@ class _StepItemsState extends State<StepItems> {
           setState(() {
             selectedButton = index;
           });
+          //TODO: make enum
+          if (selectedButton == 0 || selectedButton == 1) {
+            context.read<DeliveryDetailBloc>().add(
+                  DeliveryGetDetails(widget.deliveryHeaderId),
+                );
+          }
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -83,6 +98,49 @@ class _StepItemsState extends State<StepItems> {
           ],
         ),
       ),
+    );
+  }
+
+  // This is an optional useage
+  BlocBuilder<DeliveryDetailBloc, DeliveryDetailState> lineItems(bool edit) {
+    return BlocBuilder<DeliveryDetailBloc, DeliveryDetailState>(
+      builder: (context, state) {
+        if (state is DeliveryDetailSuccess) {
+          List<DeliveryDetail> products = state.deliveryDetail;
+
+          return products.isNotEmpty
+              ? SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      const Text('Confirm your delivery'),
+                      ...products.map(
+                        (product) => ListTile(
+                          title: Text(product.stock_ref),
+                          leading: Checkbox(
+                            value: product.loaded,
+                            onChanged: (bool? newValue) {
+                              setState(
+                                () {
+                                  product.loaded = newValue ?? false;
+                                },
+                              );
+                            },
+                          ),
+                          trailing: IconButton(
+                              onPressed: () {
+                                print("Pressed");
+                              },
+                              icon: const Icon(Icons.edit)),
+                        ),
+                      )
+                    ],
+                  ),
+                )
+              : const Text("No data found");
+        } else {
+          return const Text("There was an error");
+        }
+      },
     );
   }
 }

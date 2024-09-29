@@ -20,7 +20,9 @@ class DeliveryRecord extends StatelessWidget {
           {
             Navigator.of(context).push(
               MaterialPageRoute(
-                builder: (context) => const ProcessDeliveryPage(),
+                builder: (context) => ProcessDeliveryPage(
+                  deliveryHeader: delivery,
+                ),
               ),
             ),
           }
