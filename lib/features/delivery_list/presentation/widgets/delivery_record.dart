@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pod_app/features/delivery_list/data/database/delivery_header_dto.dart';
 import 'package:pod_app/features/delivery_list/domain/entity/delivery_header.dart';
 import 'package:pod_app/features/delivery_list/presentation/widgets/status_pill.dart';
-import 'package:pod_app/features/delivery_record/presentation/pages/delivery_page.dart';
+import 'package:pod_app/features/delivery_record/presentation/pages/view_delivery_page.dart';
 import 'package:pod_app/features/delivery_record/presentation/pages/process_delivery_page.dart';
 
 class DeliveryRecord extends StatelessWidget {
