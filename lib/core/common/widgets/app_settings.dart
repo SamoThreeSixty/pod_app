@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_info_plus/package_info_plus.dart';
-import 'package:pod_app/core/common/cubits/cubit/app_theme_cubit.dart';
+import 'package:pod_app/core/common/cubits/theme/app_theme_cubit.dart';
 
 class AppSettings extends StatefulWidget {
   const AppSettings({super.key});
