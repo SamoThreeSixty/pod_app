@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:pod_app/features/delivery_list/domain/entity/delivery_header.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/step_controls.dart';
@@ -19,6 +21,9 @@ class ProcessDeliveryPage extends StatefulWidget {
 
 class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
   int currentStep = 0;
+
+  List<String> signaturePaths = [];
+  String signaturePath = '';
 
   @override
   void initState() {
@@ -111,11 +116,19 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
           content: const StepImages(),
         ),
         Step(
-          // TODO: finalise signing
           state: currentStep > 2 ? StepState.complete : StepState.indexed,
           isActive: currentStep >= 2,
           title: const Text('Sign'),
-          content: const StepSignature(),
+          content: StepSignature(
+            onStringChanged: (String emittedSignaturePath) {
+              setState(
+                () {
+                  debugger();
+                  signaturePath = emittedSignaturePath;
+                },
+              );
+            },
+          ),
         )
       ];
 

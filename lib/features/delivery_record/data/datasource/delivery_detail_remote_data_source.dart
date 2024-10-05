@@ -13,7 +13,6 @@ class DeliveryDetailRemoteDateSource implements DeliveryDetailDataSource {
   @override
   Future<List<DeliveryDetail>> getDeliveryDetail(int id) async {
     try {
-      debugger();
       final List<dynamic> response = await _supabaseClient
           .from('delivery_detail')
           .select()
