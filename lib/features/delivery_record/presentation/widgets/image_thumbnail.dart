@@ -4,7 +4,7 @@ import 'package:camera/camera.dart';
 import 'package:flutter/material.dart';
 
 class ImageThumbnail extends StatelessWidget {
-  final XFile selectedImage;
+  final String selectedImage;
 
   const ImageThumbnail({super.key, required this.selectedImage});
 
@@ -17,7 +17,7 @@ class ImageThumbnail extends StatelessWidget {
           _showFullImage(context, selectedImage);
         },
         child: Image.file(
-          File(selectedImage.path),
+          File(selectedImage),
           width: 100,
           height: 100,
           fit: BoxFit.cover,
@@ -27,7 +27,7 @@ class ImageThumbnail extends StatelessWidget {
   }
 }
 
-void _showFullImage(BuildContext context, XFile image) {
+void _showFullImage(BuildContext context, String image) {
   showDialog(
     context: context,
     builder: (BuildContext context) {
@@ -35,7 +35,7 @@ void _showFullImage(BuildContext context, XFile image) {
         child: Container(
           padding: const EdgeInsets.all(16.0),
           child: Image.file(
-            File(image.path),
+            File(image),
             fit: BoxFit.cover, // Adjust to fit the full image
           ),
         ),
