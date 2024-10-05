@@ -1,4 +1,5 @@
 import 'dart:developer';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:pod_app/features/delivery_list/domain/entity/delivery_header.dart';
@@ -81,7 +82,7 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
                 ),
                 StepControls(
                   completeSteps: () => _validateProcessSteps()
-                      ? print("all done") //TODO: Show a popup to confirm
+                      ? confirmDelivery()
                       : print(
                           "more to do"), // TODO: Show an alert that information is missing
                   changeStep: (newStep) {
@@ -97,6 +98,24 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
           )
         ],
       ),
+    );
+  }
+
+  void confirmDelivery() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Column(
+            children: [
+              Image.file(
+                File(signaturePath),
+                fit: BoxFit.cover, // Adjust to fit the full image
+              ),
+            ],
+          ),
+        );
+      },
     );
   }
 
@@ -133,6 +152,6 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
       ];
 
   bool _validateProcessSteps() {
-    return false;
+    return true;
   }
 }
