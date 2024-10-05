@@ -22,6 +22,11 @@ import 'package:pod_app/features/delivery_record/data/repository/delivery_detail
 import 'package:pod_app/features/delivery_record/domain/repository/delivery_detail_repository.dart';
 import 'package:pod_app/features/delivery_record/domain/usecase/get_delivery_detail.dart';
 import 'package:pod_app/features/delivery_record/presentation/bloc/delivery_detail_bloc.dart';
+import 'package:pod_app/features/event/data/datasources/event_log_remote_data_source.dart';
+import 'package:pod_app/features/event/data/repository/event_log_repository_imp.dart';
+import 'package:pod_app/features/event/domain/entities/event_log.dart';
+import 'package:pod_app/features/event/domain/usecase/get_all_event_logs.dart';
+import 'package:pod_app/features/event/presentation/bloc/event_log_bloc.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
@@ -69,6 +74,16 @@ void main() async {
             getDeliveryDetail: GetDeliveryDetail(
               DeliveryDetailRepositoryImpl(
                 DeliveryDetailRemoteDateSource(supabaseClient),
+              ),
+            ),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => EventLogBloc(
+            getAllEventLogs: GetAllEventLogs(
+              EventLogRepositoryImp(
+                eventLogRemoteDataSource: EventLogRemoteDataSourceImp(),
+                eventLogLocalDataSource: EventLogRemoteDataSourceImp(),
               ),
             ),
           ),

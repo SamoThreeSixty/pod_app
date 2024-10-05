@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:package_info_plus/package_info_plus.dart';
 import 'package:pod_app/core/common/cubits/theme/app_theme_cubit.dart';
+import 'package:pod_app/features/event/presentation/pages/event_log.dart';
 
 class AppSettings extends StatefulWidget {
   const AppSettings({super.key});
@@ -42,7 +43,7 @@ class _AppSettingsState extends State<AppSettings> {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (context) {
-                          return Container();
+                          return const EventLogPage();
                         },
                       ),
                     );
