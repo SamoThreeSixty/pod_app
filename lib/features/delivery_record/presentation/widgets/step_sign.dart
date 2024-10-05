@@ -17,12 +17,40 @@ class _StepSignatureState extends State<StepSignature> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: Signature(
-        controller: _signatureController,
-        height: 200,
-        backgroundColor: Colors.blue,
-      ),
+    return Column(
+      children: [
+        Signature(
+          controller: _signatureController,
+          height: 200,
+          backgroundColor: Colors.white,
+        ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            ElevatedButton(
+                onPressed: () {
+                  _signatureController.disabled
+                      ? setState(() {
+                          _signatureController.clear();
+                          _signatureController.disabled = false;
+                        })
+                      : setState(() => _signatureController.undo());
+                },
+                child: Text(
+                  _signatureController.disabled ? 'Clear' : 'Undo',
+                )),
+            _signatureController.disabled
+                ? Container()
+                : ElevatedButton(
+                    onPressed: () {
+                      setState(() => _signatureController.disabled =
+                          !_signatureController.disabled);
+                    },
+                    child: const Text('Confirm'),
+                  ),
+          ],
+        ),
+      ],
     );
   }
 }
