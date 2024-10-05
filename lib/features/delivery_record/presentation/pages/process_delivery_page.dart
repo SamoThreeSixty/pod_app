@@ -2,6 +2,7 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:pod_app/core/service/file_service.dart';
 import 'package:pod_app/features/delivery_list/domain/entity/delivery_header.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/image_thumbnail.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/step_controls.dart';
@@ -28,6 +29,8 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
   String signaturePath = '';
 
   List<String> errorMessages = [];
+
+  final FileService _fileService = FileService();
 
   @override
   void initState() {
@@ -194,7 +197,9 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
                     child: const Text('Change'),
                   ),
                   ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      onConfirmDelivery();
+                    },
                     child: const Text('Confirm'),
                   ),
                 ],
@@ -229,5 +234,13 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
         );
       },
     );
+  }
+
+  Future<void> onConfirmDelivery() async {
+    for (var image in imagePaths) {
+      _fileService.saveImageToGallery(image);
+    }
+
+    _fileService.saveImageToGallery(signaturePath);
   }
 }

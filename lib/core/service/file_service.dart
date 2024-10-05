@@ -45,4 +45,22 @@ class FileService {
       print('Error moving file: $e');
     }
   }
+
+  Future<void> saveImageToGallery(String sourcePath) async {
+    try {
+      await Gal.hasAccess();
+
+      File sourceFile = File(sourcePath);
+
+      List<int> fileBytes = await sourceFile.readAsBytes();
+      Uint8List uint8List =
+          Uint8List.fromList(fileBytes); // Convert to Uint8List
+
+      if (sourcePath.endsWith('.jpg') || sourcePath.endsWith('.png')) {
+        await Gal.putImageBytes(uint8List);
+      }
+    } catch (e) {
+      print('Error moving file: $e');
+    }
+  }
 }
