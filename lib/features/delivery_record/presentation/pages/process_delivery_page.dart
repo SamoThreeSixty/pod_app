@@ -3,6 +3,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:pod_app/features/delivery_list/domain/entity/delivery_header.dart';
+import 'package:pod_app/features/delivery_record/presentation/widgets/image_thumbnail.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/step_controls.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/step_images.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/step_items.dart';
@@ -23,7 +24,7 @@ class ProcessDeliveryPage extends StatefulWidget {
 class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
   int currentStep = 0;
 
-  List<String> signaturePaths = [];
+  List<String> imagePaths = [];
   String signaturePath = '';
 
   @override
@@ -108,6 +109,13 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
         return Dialog(
           child: Column(
             children: [
+              Wrap(
+                children: imagePaths.map(
+                  (image) {
+                    return ImageThumbnail(selectedImage: image);
+                  },
+                ).toList(),
+              ),
               Image.file(
                 File(signaturePath),
                 fit: BoxFit.cover, // Adjust to fit the full image
@@ -132,7 +140,15 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
           state: currentStep > 1 ? StepState.complete : StepState.indexed,
           isActive: currentStep >= 1,
           title: const Text('Images'),
-          content: const StepImages(),
+          content: StepImages(
+            onDeleteImage: (deleteImagePath) {
+              imagePaths.remove(deleteImagePath);
+            },
+            onSaveImage: (addImagePath) {
+              debugger();
+              imagePaths.add(addImagePath);
+            },
+          ),
         ),
         Step(
           state: currentStep > 2 ? StepState.complete : StepState.indexed,
