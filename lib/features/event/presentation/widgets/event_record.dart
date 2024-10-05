@@ -53,12 +53,7 @@ class _EventRecordState extends State<EventRecord> {
                       children: [
                         Text(widget.event.LogID.toString()),
                         Text(widget.event.UserID.toString()),
-                        Text(widget.event.FreeType),
-                        Text(widget.event.KeyValue),
-                        Text(widget.event.ModuleName),
                         Text(widget.event.Operation),
-                        Text(widget.event.ShortDesc),
-                        Text(widget.event.Table),
                       ],
                     ),
                   ),
