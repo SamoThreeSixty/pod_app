@@ -4,7 +4,11 @@ import 'package:pod_app/features/delivery_record/presentation/widgets/icon_butto
 import 'package:pod_app/features/delivery_record/presentation/widgets/image_thumbnail.dart';
 
 class StepImages extends StatefulWidget {
-  const StepImages({super.key});
+  final Function(String) onSaveImage;
+  final Function(String) onDeleteImage; //tba later
+
+  const StepImages(
+      {super.key, required this.onSaveImage, required this.onDeleteImage});
 
   @override
   State<StepImages> createState() => _StepImagesState();
@@ -27,6 +31,7 @@ class _StepImagesState extends State<StepImages> {
                 setState(() {
                   selectedImages.add(image);
                 });
+                widget.onSaveImage(image.path);
               },
             ),
             GalleryButton(
@@ -49,7 +54,7 @@ class _StepImagesState extends State<StepImages> {
             runSpacing: 8.0,
             children: selectedImages.map(
               (image) {
-                return ImageThumbnail(selectedImage: image);
+                return ImageThumbnail(selectedImage: image.path);
               },
             ).toList(),
           ),
