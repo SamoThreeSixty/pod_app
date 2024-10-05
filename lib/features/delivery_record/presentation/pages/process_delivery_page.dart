@@ -27,6 +27,8 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
   List<String> imagePaths = [];
   String signaturePath = '';
 
+  List<String> errorMessages = [];
+
   @override
   void initState() {
     super.initState();
@@ -84,8 +86,7 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
                 StepControls(
                   completeSteps: () => _validateProcessSteps()
                       ? confirmDelivery()
-                      : print(
-                          "more to do"), // TODO: Show an alert that information is missing
+                      : errorDialog(),
                   changeStep: (newStep) {
                     setState(() {
                       currentStep = newStep;
@@ -99,31 +100,6 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
           )
         ],
       ),
-    );
-  }
-
-  void confirmDelivery() {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          child: Column(
-            children: [
-              Wrap(
-                children: imagePaths.map(
-                  (image) {
-                    return ImageThumbnail(selectedImage: image);
-                  },
-                ).toList(),
-              ),
-              Image.file(
-                File(signaturePath),
-                fit: BoxFit.cover, // Adjust to fit the full image
-              ),
-            ],
-          ),
-        );
-      },
     );
   }
 
@@ -145,7 +121,6 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
               imagePaths.remove(deleteImagePath);
             },
             onSaveImage: (addImagePath) {
-              debugger();
               imagePaths.add(addImagePath);
             },
           ),
@@ -158,7 +133,6 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
             onStringChanged: (String emittedSignaturePath) {
               setState(
                 () {
-                  debugger();
                   signaturePath = emittedSignaturePath;
                 },
               );
@@ -168,6 +142,92 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
       ];
 
   bool _validateProcessSteps() {
-    return true;
+    bool returnValue = true;
+    errorMessages.clear();
+
+    if (signaturePath.isEmpty) {
+      errorMessages.add('Please provide a signature');
+      returnValue = false;
+    }
+
+    if (imagePaths.isEmpty) {
+      errorMessages.add('Please provide at lease one image');
+      returnValue = false;
+    }
+
+    return returnValue;
+  }
+
+  void confirmDelivery() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Column(
+            children: [
+              const Text(
+                'Images',
+                style: TextStyle(fontSize: 40),
+              ),
+              Wrap(
+                children: imagePaths.map(
+                  (image) {
+                    return ImageThumbnail(selectedImage: image);
+                  },
+                ).toList(),
+              ),
+              const Text(
+                'Signature',
+                style: TextStyle(fontSize: 40),
+              ),
+              Image.file(
+                File(signaturePath),
+                fit: BoxFit.cover, // Adjust to fit the full image
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    child: const Text('Change'),
+                  ),
+                  ElevatedButton(
+                    onPressed: () {},
+                    child: const Text('Confirm'),
+                  ),
+                ],
+              ),
+            ],
+          ),
+        );
+      },
+    );
+  }
+
+  void errorDialog() {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          child: Column(
+            children: [
+              const Text(
+                "Errors:",
+                style: TextStyle(fontSize: 30),
+              ),
+              Column(
+                children: errorMessages.map(
+                  (error) {
+                    return Text(error);
+                  },
+                ).toList(),
+              ),
+            ],
+          ),
+        );
+      },
+    );
   }
 }
