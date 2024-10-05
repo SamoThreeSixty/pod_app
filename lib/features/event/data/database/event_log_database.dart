@@ -44,7 +44,7 @@ class EventLogDatabase {
         ${EventLogFields.EventDate} $textType,
         ${EventLogFields.Operation} $integerType,
         ${EventLogFields.Description} $textType,
-        ${EventLogFields.UserID} $integerType,
+        ${EventLogFields.UserID} $integerType
         )
       ''');
   }
