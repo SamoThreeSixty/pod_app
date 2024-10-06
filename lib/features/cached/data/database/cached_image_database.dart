@@ -40,7 +40,6 @@ class CachedImageDatabase {
         ${CachedImageFields.id} $idType,
         ${CachedImageFields.name} $textType,
         ${CachedImageFields.localPath} $textType,
-        ${CachedImageFields.galleryPath} $textType,
         ${CachedImageFields.createdAt} $textType,
         ${CachedImageFields.isSynced} $boolType,
         ${CachedImageFields.syncedAt} $textType,
