@@ -1,6 +1,8 @@
 import 'dart:developer';
 
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:fpdart/src/either.dart';
+import 'package:pod_app/core/common/cubits/connectivity/connectivity_cubit.dart';
 import 'package:pod_app/core/event/events.dart';
 import 'package:pod_app/features/delivery_record/data/datasource/delivery_detail_local_data_source.dart';
 import 'package:pod_app/features/delivery_record/data/datasource/delivery_detail_remote_data_source.dart';
@@ -18,8 +20,16 @@ class DeliveryDetailRepositoryImpl implements DeliveryDetailRepository {
   Future<Either<Failure, List<DeliveryDetail>>> getDeliveryDetail(
       int id) async {
     try {
-      final deliveryDetail =
-          await deliveryDetailRemoteDateSourceImp.getDeliveryDetail(id);
+      final connectivityStatus = ConnectivityCubit().state;
+      List<DeliveryDetail> deliveryDetail = [];
+
+      if (connectivityStatus == ConnectivityResult.none) {
+        //@TODO get a local db set up
+      } else {
+        deliveryDetail =
+            await deliveryDetailRemoteDateSourceImp.getDeliveryDetail(id);
+      }
+
       return right(deliveryDetail);
     } on ServerException catch (e) {
       return left(
@@ -34,9 +44,15 @@ class DeliveryDetailRepositoryImpl implements DeliveryDetailRepository {
   Future<Either<Failure, void>> saveImages(
       List<String> paths, int deliveryID) async {
     try {
-      // Local first
-      await deliveryDetailLocalDateSourceImp.saveImages(paths, deliveryID);
-      await deliveryDetailRemoteDateSourceImp.saveImages(paths, deliveryID);
+      final connectivityStatus = ConnectivityCubit().state;
+
+      if (connectivityStatus == ConnectivityResult.none) {
+        await deliveryDetailLocalDateSourceImp.saveImages(paths, deliveryID);
+      } else {
+        await deliveryDetailLocalDateSourceImp.saveImages(paths, deliveryID);
+        await deliveryDetailRemoteDateSourceImp.saveImages(paths, deliveryID);
+      }
+
       return right(null);
     } catch (e) {
       return left(
@@ -51,8 +67,17 @@ class DeliveryDetailRepositoryImpl implements DeliveryDetailRepository {
   Future<Either<Failure, void>> saveSignature(
       String path, int deliveryID) async {
     try {
-      await deliveryDetailRemoteDateSourceImp.saveSignature(path, deliveryID);
-      await deliveryDetailLocalDateSourceImp.saveSignature(path, deliveryID);
+      final connectivityStatus = ConnectivityCubit().state;
+
+      if (connectivityStatus == ConnectivityResult.none) {
+        // Just save to local
+        await deliveryDetailLocalDateSourceImp.saveSignature(path, deliveryID);
+      } else {
+        // Save to external and local
+        await deliveryDetailLocalDateSourceImp.saveSignature(path, deliveryID);
+        await deliveryDetailRemoteDateSourceImp.saveSignature(path, deliveryID);
+      }
+
       return right(null);
     } catch (e) {
       return left(
