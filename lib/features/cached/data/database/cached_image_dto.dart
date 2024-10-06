@@ -66,6 +66,19 @@ class CachedImageDto {
         syncAction: syncAction ?? this.syncAction,
       );
 
+  factory CachedImageDto.fromEntity(CachedImage cachedImage) {
+    return CachedImageDto(
+      id: cachedImage.id,
+      name: cachedImage.name,
+      localPath: cachedImage.localPath,
+      galleryPath: cachedImage.galleryPath,
+      createdAt: cachedImage.createdAt,
+      isSynced: cachedImage.isSynced,
+      syncedAt: cachedImage.syncedAt,
+      syncAction: cachedImage.syncAction,
+    );
+  }
+
   static CachedImage fromJson(Map<String, Object?> json) => CachedImage(
         id: json['_id'] as int,
         name: json['_name'] as String,

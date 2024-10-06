@@ -61,6 +61,18 @@ class CachedDataDto {
         syncAction: syncAction ?? this.syncAction,
       );
 
+  factory CachedDataDto.fromEntity(CachedData cachedData) {
+    return CachedDataDto(
+      id: cachedData.id,
+      table: cachedData.table,
+      data: cachedData.data,
+      createdAt: cachedData.createdAt,
+      isSynced: cachedData.isSynced,
+      syncedAt: cachedData.syncedAt,
+      syncAction: cachedData.syncAction,
+    );
+  }
+
   static CachedData fromJson(Map<String, Object?> json) => CachedData(
         id: json['_id'] as int,
         table: json['_table'] as String,
