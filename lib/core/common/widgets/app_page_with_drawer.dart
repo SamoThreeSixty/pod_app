@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pod_app/core/common/widgets/app_settings.dart';
 import 'package:pod_app/core/common/widgets/connectivity_state.dart';
-import 'package:pod_app/core/usecase/auth/presentation/bloc/auth_bloc.dart';
-import 'package:pod_app/core/usecase/auth/presentation/pages/login_page.dart';
+import 'package:pod_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:pod_app/features/auth/presentation/pages/login_page.dart';
 import 'package:pod_app/features/delivery_list/presentation/pages/delivery_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
