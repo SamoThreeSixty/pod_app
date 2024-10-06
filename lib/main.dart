@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter/material.dart';
+import 'package:pod_app/core/common/cubits/connectivity/connectivity_cubit.dart';
 import 'package:pod_app/core/common/cubits/theme/app_theme_cubit.dart';
 import 'package:pod_app/features/auth/data/datasources/auth_datasources.dart';
 import 'package:pod_app/features/auth/data/datasources/auth_remote_datasource.dart';
@@ -104,6 +105,9 @@ void main() async {
               ),
             ),
           ),
+        ),
+        BlocProvider(
+          create: (_) => ConnectivityCubit(),
         ),
         BlocProvider(
           create: (context) => ThemeCubit(),
