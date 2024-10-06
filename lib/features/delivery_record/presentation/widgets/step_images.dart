@@ -41,6 +41,7 @@ class _StepImagesState extends State<StepImages> {
                 setState(() {
                   selectedImages.add(image!);
                 });
+                widget.onSaveImage(image!.path);
               },
             ),
           ],
