@@ -1,7 +1,7 @@
 import 'package:pod_app/features/cached/data/database/cached_data_database.dart';
 import 'package:pod_app/features/cached/data/database/cached_data_dto.dart';
+import 'package:pod_app/features/cached/data/database/cached_image_database.dart';
 import 'package:pod_app/features/cached/data/database/cached_image_dto.dart';
-import 'package:pod_app/features/cached/data/database/cached_images_database.dart';
 import 'package:pod_app/features/cached/data/datasource/cached_datasource.dart';
 import 'package:pod_app/features/cached/domain/entity/cached_data.dart';
 import 'package:pod_app/features/cached/domain/entity/cached_image.dart';
@@ -23,7 +23,7 @@ class CachedLocalDataSource implements CachedDataSource {
   @override
   Future<void> addCachedImage(CachedImage cachedImage) async {
     try {
-      var db = CachedImagesDatabase.instance;
+      var db = CachedImageDatabase.instance;
 
       await db.insertCachedImage(
         CachedImageDto.fromEntity(cachedImage),
