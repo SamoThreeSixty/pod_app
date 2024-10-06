@@ -1,4 +1,4 @@
-import 'package:pod_app/features/cached/domain/entity/cached_images.dart';
+import 'package:pod_app/features/cached/domain/entity/cached_image.dart';
 
 class CachedImageModel extends CachedImage {
   CachedImageModel({
