@@ -173,18 +173,44 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
             child: BlocBuilder<DeliveryDetailBloc, DeliveryDetailState>(
               builder: (context, state) {
                 if (state is SaveSignatureAndImagesLoading) {
-                  return const load
+                  return const Center(
+                    child: CircularProgressIndicator(),
+                  );
                 }
 
                 if (state is SaveSignatureAndImagesFailure) {
-                  return const Column(
-                    children: [Text("Failure"), Text("Reason:")],
+                  return Column(
+                    children: [
+                      const Text("Failure"),
+                      const Icon(
+                        Icons.error_outline,
+                        color: Colors.red,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Try again'),
+                      ),
+                    ],
                   );
                 }
 
                 if (state is SaveSignatureAndImagesSuccess) {
-                  return const Column(
-                    children: [Text("Success")],
+                  return Column(
+                    children: [
+                      const Text("Success"),
+                      const Icon(
+                        Icons.check_circle_outline,
+                        color: Colors.green,
+                      ),
+                      ElevatedButton(
+                        onPressed: () {
+                          Navigator.pop(context);
+                        },
+                        child: const Text('Return to list'),
+                      ),
+                    ],
                   );
                 }
 
