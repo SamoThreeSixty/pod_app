@@ -1,7 +1,7 @@
 import 'package:fpdart/src/either.dart';
 import 'package:pod_app/core/event/events.dart';
 import 'package:pod_app/core/usecase/usecase.dart';
-import 'package:pod_app/features/auth/domain/repository/auth_repository.dart';
+import 'package:pod_app/core/usecase/auth/domain/repository/auth_repository.dart';
 
 class SignOut implements UseCase<void, NoParams> {
   final AuthRepository authRepository;

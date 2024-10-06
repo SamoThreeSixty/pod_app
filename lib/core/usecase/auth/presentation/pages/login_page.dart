@@ -5,9 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pod_app/core/common/widgets/app_page_with_drawer.dart';
-import 'package:pod_app/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:pod_app/features/auth/presentation/pages/register_account.dart';
-import 'package:pod_app/features/auth/presentation/widgets/auth_field.dart';
+import 'package:pod_app/core/usecase/auth/presentation/bloc/auth_bloc.dart';
+import 'package:pod_app/core/usecase/auth/presentation/pages/register_account.dart';
+import 'package:pod_app/core/usecase/auth/presentation/widgets/auth_field.dart';
 import 'package:pod_app/features/delivery_list/presentation/pages/delivery_list.dart';
 import 'package:pod_app/main.dart';
 

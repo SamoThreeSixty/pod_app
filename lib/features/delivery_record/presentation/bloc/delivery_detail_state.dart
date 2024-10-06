@@ -18,3 +18,11 @@ final class DeliveryDetailFailure extends DeliveryDetailState {
 
   DeliveryDetailFailure(this.message);
 }
+
+// Saving images
+
+final class SaveSignatureAndImagesLoading extends DeliveryDetailState {}
+
+final class SaveSignatureAndImagesSuccess extends DeliveryDetailState {}
+
+final class SaveSignatureAndImagesFailure extends DeliveryDetailState {}

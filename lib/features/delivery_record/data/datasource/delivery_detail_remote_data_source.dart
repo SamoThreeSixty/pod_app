@@ -1,5 +1,6 @@
-import 'dart:developer';
+import 'dart:io';
 
+import 'package:pod_app/core/service/supabase_storage.dart';
 import 'package:pod_app/features/delivery_record/data/model/delivery_detail_model.dart';
 import 'package:pod_app/features/delivery_record/data/datasource/delivery_detail_data_source.dart';
 import 'package:pod_app/features/delivery_record/domain/entity/delivery_detail.dart';
@@ -24,5 +25,21 @@ class DeliveryDetailRemoteDateSource implements DeliveryDetailDataSource {
     } catch (e) {
       throw Exception('Error loading from Supabase');
     }
+  }
+
+  @override
+  Future<void> saveImages(List<String> paths, int deliveryID) async {
+    for (int index = 0; index < paths.length; index++) {
+      var image = paths[index];
+
+      await SupabaseStorageService(_supabaseClient)
+          .uploadPodImage(File(image), deliveryID, index);
+    }
+  }
+
+  @override
+  Future<void> saveSignature(String path, int deliveryID) async {
+    await SupabaseStorageService(_supabaseClient)
+        .uploadPodSignature(File(path), deliveryID);
   }
 }

@@ -1,9 +1,9 @@
 import 'package:fpdart/src/either.dart';
 import 'package:gotrue/src/types/user.dart';
 import 'package:pod_app/core/event/events.dart';
-import 'package:pod_app/features/auth/data/datasources/auth_datasources.dart';
-import 'package:pod_app/features/auth/data/datasources/auth_remote_datasource.dart';
-import 'package:pod_app/features/auth/domain/repository/auth_repository.dart';
+import 'package:pod_app/core/usecase/auth/data/datasources/auth_datasources.dart';
+import 'package:pod_app/core/usecase/auth/data/datasources/auth_remote_datasource.dart';
+import 'package:pod_app/core/usecase/auth/domain/repository/auth_repository.dart';
 
 class AuthRepositoryImp implements AuthRepository {
   final AuthDataSource remoteDataSource;

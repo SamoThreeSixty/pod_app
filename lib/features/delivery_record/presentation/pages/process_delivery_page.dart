@@ -2,13 +2,17 @@ import 'dart:developer';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:pod_app/core/service/file_service.dart';
+import 'package:pod_app/core/service/supabase_storage.dart';
 import 'package:pod_app/features/delivery_list/domain/entity/delivery_header.dart';
+import 'package:pod_app/features/delivery_record/presentation/bloc/delivery_detail_bloc.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/image_thumbnail.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/step_controls.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/step_images.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/step_items.dart';
 import 'package:pod_app/features/delivery_record/presentation/widgets/step_sign.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
 
 class ProcessDeliveryPage extends StatefulWidget {
   final DeliveryHeader deliveryHeader;
@@ -163,52 +167,65 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
 
   void confirmDelivery() {
     showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          child: Column(
-            children: [
-              const Text(
-                'Images',
-                style: TextStyle(fontSize: 40),
-              ),
-              Wrap(
-                children: imagePaths.map(
-                  (image) {
-                    return ImageThumbnail(selectedImage: image);
-                  },
-                ).toList(),
-              ),
-              const Text(
-                'Signature',
-                style: TextStyle(fontSize: 40),
-              ),
-              Image.file(
-                File(signaturePath),
-                fit: BoxFit.cover, // Adjust to fit the full image
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  ElevatedButton(
-                    onPressed: () {
-                      Navigator.pop(context);
-                    },
-                    child: const Text('Change'),
-                  ),
-                  ElevatedButton(
-                    onPressed: () {
-                      onConfirmDelivery();
-                    },
-                    child: const Text('Confirm'),
-                  ),
-                ],
-              ),
-            ],
-          ),
-        );
-      },
-    );
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            child: BlocBuilder<DeliveryDetailBloc, DeliveryDetailState>(
+              builder: (context, state) {
+                if (state is SaveSignatureAndImagesLoading) {
+                  return const Text("Im loading");
+                }
+
+                return Column(
+                  children: [
+                    const Text(
+                      'Images',
+                      style: TextStyle(fontSize: 40),
+                    ),
+                    Wrap(
+                      children: imagePaths.map(
+                        (image) {
+                          return ImageThumbnail(selectedImage: image);
+                        },
+                      ).toList(),
+                    ),
+                    const Text(
+                      'Signature',
+                      style: TextStyle(fontSize: 40),
+                    ),
+                    Image.file(
+                      File(signaturePath),
+                      fit: BoxFit.cover, // Adjust to fit the full image
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        ElevatedButton(
+                          onPressed: () {
+                            Navigator.pop(context);
+                          },
+                          child: const Text('Change'),
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            BlocProvider.of<DeliveryDetailBloc>(context).add(
+                              SaveSignatureAndImages(
+                                imagePaths: imagePaths,
+                                signaturePath: signaturePath,
+                                deliveryId: widget.deliveryHeader.id,
+                              ),
+                            );
+                          },
+                          child: const Text('Confirm'),
+                        ),
+                      ],
+                    ),
+                  ],
+                );
+              },
+            ),
+          );
+        });
   }
 
   void errorDialog() {
@@ -234,13 +251,5 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
         );
       },
     );
-  }
-
-  Future<void> onConfirmDelivery() async {
-    for (var image in imagePaths) {
-      _fileService.saveImageToGallery(image);
-    }
-
-    _fileService.saveImageToGallery(signaturePath);
   }
 }

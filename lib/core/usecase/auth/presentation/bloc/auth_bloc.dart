@@ -2,8 +2,8 @@ import 'package:bloc/bloc.dart';
 import 'package:meta/meta.dart';
 
 // Domain usecase
-import 'package:pod_app/features/auth/domain/usecase/sign_in_with_email_password.dart';
-import 'package:pod_app/features/auth/domain/usecase/sign_out.dart';
+import 'package:pod_app/core/usecase/auth/domain/usecase/sign_in_with_email_password.dart';
+import 'package:pod_app/core/usecase/auth/domain/usecase/sign_out.dart';
 
 // Supabase
 import 'package:supabase_flutter/supabase_flutter.dart';

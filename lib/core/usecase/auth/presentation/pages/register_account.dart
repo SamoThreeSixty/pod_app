@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pod_app/features/auth/presentation/bloc/auth_bloc.dart';
-import 'package:pod_app/features/auth/presentation/widgets/auth_field.dart';
+import 'package:pod_app/core/usecase/auth/presentation/bloc/auth_bloc.dart';
+import 'package:pod_app/core/usecase/auth/presentation/widgets/auth_field.dart';
 import 'package:pod_app/main.dart';
 
 class SignupPage extends StatefulWidget {
@@ -59,7 +59,7 @@ class _SignupPageState extends State<SignupPage> {
                     decoration: const BoxDecoration(
                       color: Colors.transparent,
                     ),
-                    child: Image(
+                    child: const Image(
                       image: AssetImage('assets/images/3.0x/flutter_logo.png'),
                     ),
                   ),
@@ -67,16 +67,16 @@ class _SignupPageState extends State<SignupPage> {
                 const SizedBox(
                   height: 50,
                 ),
-                Text("Sign in"),
+                const Text("Sign in"),
                 AuthField(
                   hintText: 'Email',
                   controller: emailController,
-                  icon: Icon(Icons.person),
+                  icon: const Icon(Icons.person),
                 ),
                 AuthField(
                   hintText: 'Password',
                   controller: passwordController,
-                  icon: Icon(Icons.lock),
+                  icon: const Icon(Icons.lock),
                   isObscureText: true,
                 ),
                 const SizedBox(height: 30.0),
@@ -93,7 +93,7 @@ class _SignupPageState extends State<SignupPage> {
                   },
                   child: const Text('Create Account'),
                 ),
-                SizedBox(
+                const SizedBox(
                   height: 20,
                 ),
                 BlocListener<AuthBloc, AuthState>(
@@ -116,7 +116,7 @@ class _SignupPageState extends State<SignupPage> {
                       if (state is AuthFailure) {
                         // Show an error dialog or message
                         ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Login failed')),
+                          const SnackBar(content: Text('Login failed')),
                         );
                       }
                     }
@@ -124,9 +124,9 @@ class _SignupPageState extends State<SignupPage> {
                   child: BlocBuilder<AuthBloc, AuthState>(
                     builder: (context, state) {
                       if (state is AuthLoggedIn) {
-                        return Text("Logged in");
+                        return const Text("Logged in");
                       } else if (state is AuthFailure) {
-                        return Text("Login failure");
+                        return const Text("Login failure");
                       }
                       // Initial or idle state UI
                       return Container(); // Show empty container or default login form

@@ -1,3 +1,4 @@
+import 'dart:developer';
 import 'dart:io';
 import 'dart:typed_data';
 
@@ -25,13 +26,15 @@ abstract interface class ISupabaseStorage {
 }
 
 class SupabaseStorageService implements ISupabaseStorage {
-  // Get a reference your Supabase client
-  final supabase = Supabase.instance.client;
+  final SupabaseClient _supabaseClient;
+
+  SupabaseStorageService(this._supabaseClient);
 
   @override
   Future<Uint8List?> getImage(String bucket, String image) async {
     try {
-      final response = await supabase.storage.from(bucket).download(image);
+      final response =
+          await _supabaseClient.storage.from(bucket).download(image);
       return response;
     } catch (e) {
       print('Error downloading image: $e');
@@ -45,7 +48,9 @@ class SupabaseStorageService implements ISupabaseStorage {
     try {
       String baseName = 'order_${orderNo.toString()}_$imageNumber';
 
-      final String fullPath = await supabase.storage.from('pod_images').upload(
+      final String fullPath = await _supabaseClient.storage
+          .from('pod_images')
+          .upload(
             baseName,
             image,
             fileOptions: const FileOptions(cacheControl: '3600', upsert: false),
@@ -63,7 +68,7 @@ class SupabaseStorageService implements ISupabaseStorage {
     try {
       String baseName = 'order_${orderNo.toString()}';
 
-      final String fullPath = await supabase.storage
+      final String fullPath = await _supabaseClient.storage
           .from('pod_signature')
           .upload(
             baseName,
