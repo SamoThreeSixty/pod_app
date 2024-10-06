@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:developer';
 
 import 'package:bloc/bloc.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
@@ -6,7 +7,7 @@ import 'package:meta/meta.dart';
 
 class ConnectivityCubit extends Cubit<ConnectivityResult> {
   static final ConnectivityCubit _instance = ConnectivityCubit._internal();
-  factory ConnectivityCubit(Connectivity connectivity) => _instance;
+  factory ConnectivityCubit() => _instance;
 
   final Connectivity _connectivity;
   late StreamSubscription<List<ConnectivityResult>> _connectivitySubscription;
