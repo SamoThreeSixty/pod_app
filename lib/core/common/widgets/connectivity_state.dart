@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pod_app/core/common/cubits/cubit/connectivity_cubit.dart';
+import 'package:pod_app/core/common/cubits/connectivity/connectivity_cubit.dart';
 
 class ConnectivityState extends StatefulWidget {
   const ConnectivityState({super.key});
