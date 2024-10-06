@@ -97,6 +97,10 @@ class _CameraWidgetState extends State<CameraWidget> {
                     children: [
                       IconButton(
                         onPressed: () async {
+                          // Make sure the camera is ready to avoid errors
+                          if (_controller == null ||
+                              !_controller!.value.isInitialized) return;
+
                           final image = await _controller!.takePicture();
 
                           onSelectImage(image);
@@ -105,6 +109,10 @@ class _CameraWidgetState extends State<CameraWidget> {
                       ),
                       IconButton(
                         onPressed: () {
+                          // Make sure the camera is ready to avoid errors
+                          if (_controller == null ||
+                              !_controller!.value.isInitialized) return;
+
                           setState(() {
                             imageSelected = false;
                             selectedImage = null;
@@ -115,6 +123,10 @@ class _CameraWidgetState extends State<CameraWidget> {
                       imageSelected
                           ? IconButton(
                               onPressed: () {
+                                // Make sure the camera is ready to avoid errors
+                                if (_controller == null ||
+                                    !_controller!.value.isInitialized) return;
+
                                 Navigator.pop(context, selectedImage);
                               },
                               icon: const Icon(Icons.check),
