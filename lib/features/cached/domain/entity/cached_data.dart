@@ -1,5 +1,5 @@
 class CachedData {
-  int id;
+  int? id;
   String table;
   String data;
   DateTime createdAt;
@@ -8,7 +8,7 @@ class CachedData {
   String syncAction; // 'create', 'update', 'delete'
 
   CachedData({
-    required this.id,
+    this.id,
     required this.table,
     required this.data,
     required this.createdAt,

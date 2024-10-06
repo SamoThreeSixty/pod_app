@@ -1,5 +1,5 @@
 class CachedImage {
-  int id;
+  int? id;
   String name;
   String localPath;
   String galleryPath;
@@ -9,7 +9,7 @@ class CachedImage {
   String syncAction; // 'create', 'update', 'delete'
 
   CachedImage({
-    required this.id,
+    this.id,
     required this.name,
     required this.localPath,
     required this.galleryPath,
