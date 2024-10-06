@@ -29,6 +29,10 @@ class ProcessDeliveryPage extends StatefulWidget {
 class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
   int currentStep = 0;
 
+  // Emits from items
+  int deliveryState = -1;
+
+  // Emits from images
   List<String> imagePaths = [];
   String signaturePath = '';
 
@@ -95,9 +99,34 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
                       ? confirmDelivery()
                       : errorDialog(),
                   changeStep: (newStep) {
-                    setState(() {
-                      currentStep = newStep;
-                    });
+                    bool error = false;
+                    String? errorMessage;
+                    // Here we can check that we have all the information before
+                    // moving onto the next step
+                    switch (newStep) {
+                      // If we have not selected a state, we will show an error
+                      case 1:
+                        error = deliveryState < 0 ? true : false;
+                        errorMessage =
+                            deliveryState < 0 ? 'Please select a state' : null;
+                      case 2:
+                        error = imagePaths.isEmpty ? true : false;
+                        errorMessage = imagePaths.isEmpty
+                            ? 'Please provide some images'
+                            : null;
+                    }
+
+                    if (!error) {
+                      setState(() {
+                        currentStep = newStep;
+                      });
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          content: Text(errorMessage!),
+                        ),
+                      );
+                    }
                   },
                   currentStep: currentStep,
                   action: 'Next',
@@ -116,6 +145,13 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
           isActive: currentStep >= 0,
           title: const Text('Items'),
           content: StepItems(
+            onStateSelect: (selectedState) {
+              setState(
+                () {
+                  deliveryState = selectedState;
+                },
+              );
+            },
             deliveryHeaderId: widget.deliveryHeader.id,
           ),
         ),

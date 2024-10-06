@@ -7,8 +7,10 @@ import 'package:pod_app/features/delivery_record/presentation/bloc/delivery_deta
 
 class StepItems extends StatefulWidget {
   final int deliveryHeaderId;
+  final Function(int) onStateSelect;
 
-  const StepItems({super.key, required this.deliveryHeaderId});
+  const StepItems(
+      {super.key, required this.deliveryHeaderId, required this.onStateSelect});
 
   @override
   State<StepItems> createState() => _StepItemsState();
@@ -79,6 +81,7 @@ class _StepItemsState extends State<StepItems> {
                   DeliveryGetDetails(widget.deliveryHeaderId),
                 );
           }
+          widget.onStateSelect(selectedButton);
         },
         child: Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
