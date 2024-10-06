@@ -51,7 +51,6 @@ class DeliveryDetailRepositoryImpl implements DeliveryDetailRepository {
   Future<Either<Failure, void>> saveSignature(
       String path, int deliveryID) async {
     try {
-      debugger();
       await deliveryDetailRemoteDateSourceImp.saveSignature(path, deliveryID);
       await deliveryDetailLocalDateSourceImp.saveSignature(path, deliveryID);
       return right(null);

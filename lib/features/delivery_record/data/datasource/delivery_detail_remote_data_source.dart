@@ -33,7 +33,7 @@ class DeliveryDetailRemoteDateSource implements DeliveryDetailDataSource {
       var image = paths[index];
 
       await SupabaseStorageService(_supabaseClient)
-          .uploadPodImage(File(image), deliveryID, index);
+          .uploadPodImage(File(image), deliveryID, index + 1);
     }
   }
 
