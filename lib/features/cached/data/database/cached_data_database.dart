@@ -1,16 +1,16 @@
-import 'package:pod_app/features/cached/data/database/cached_image_dto.dart';
-import 'package:pod_app/features/cached/domain/entity/cached_image.dart';
+import 'package:pod_app/features/cached/data/database/cached_data_dto.dart';
+import 'package:pod_app/features/cached/domain/entity/cached_data.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path/path.dart';
 
-class CachedImageDatabase {
+class CachedDataDatabase {
   // Singleton instance
-  static final CachedImageDatabase instance = CachedImageDatabase._init();
+  static final CachedDataDatabase instance = CachedDataDatabase._init();
 
   // Database instance
   Database? _database;
 
-  CachedImageDatabase._init();
+  CachedDataDatabase._init();
 
   // Data types
   final idType = 'INTEGER PRIMARY KEY AUTOINCREMENT';
@@ -22,7 +22,7 @@ class CachedImageDatabase {
   Future<Database> get database async {
     if (_database != null) return _database!;
 
-    _database = await _initDB('cached_images.db');
+    _database = await _initDB('cached_data.db');
     return _database!;
   }
 
@@ -36,46 +36,45 @@ class CachedImageDatabase {
 
   Future<void> _createDB(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE $tableCachedImages (
-        ${CachedImageFields.id} $idType,
-        ${CachedImageFields.name} $textType,
-        ${CachedImageFields.localPath} $textType,
-        ${CachedImageFields.galleryPath} $textType,
-        ${CachedImageFields.createdAt} $textType,
-        ${CachedImageFields.isSynced} $boolType,
-        ${CachedImageFields.syncedAt} $textType,
-        ${CachedImageFields.syncAction} $textType
+      CREATE TABLE $tableCachedData (
+        ${CachedDataFields.id} $idType,
+        ${CachedDataFields.table} $textType,
+        ${CachedDataFields.data} $textType,
+        ${CachedDataFields.createdAt} $textType,
+        ${CachedDataFields.isSynced} $boolType,
+        ${CachedDataFields.syncedAt} $textType,
+        ${CachedDataFields.syncAction} $textType
       )
     ''');
   }
 
-  Future<int> insertCachedImage(CachedImageDto imageDTO) async {
+  Future<int> insertCachedImage(CachedDataDto dataDTO) async {
     final db = await instance.database;
 
     return await db.insert(
-      'cached_images',
-      imageDTO.toJson(),
+      'cached_data',
+      dataDTO.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
   }
 
-  Future<List<CachedImage>> fetchAllCachedImages() async {
+  Future<List<CachedData>> fetchAllCachedImages() async {
     final db = await database;
 
-    const orderBy = '${CachedImageFields.id} ASC';
+    const orderBy = '${CachedDataFields.id} ASC';
 
     final List<Map<String, dynamic>> result =
-        await db.query('cached_images', orderBy: orderBy);
+        await db.query('cached_data', orderBy: orderBy);
 
-    return result.map((json) => CachedImageDto.fromJson(json)).toList();
+    return result.map((json) => CachedDataDto.fromJson(json)).toList();
   }
 
   Future<void> deleteCachedImage(int id) async {
     final db = await instance.database;
 
     await db.delete(
-      tableCachedImages,
-      where: '${CachedImageFields.id} = ?',
+      tableCachedData,
+      where: '${CachedDataFields.id} = ?',
       whereArgs: [id],
     );
   }
