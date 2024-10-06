@@ -54,9 +54,9 @@ class DeliveryDetailBloc
     final resImage = await _saveImages(imagesParams);
 
     resSignature.flatMap((_) => resImage).fold((f) {
-      print("Encountered and error$f");
+      emit(SaveSignatureAndImagesFailure());
     }, (r) {
-      print("Worked");
+      emit(SaveSignatureAndImagesSuccess());
     });
   }
 }
