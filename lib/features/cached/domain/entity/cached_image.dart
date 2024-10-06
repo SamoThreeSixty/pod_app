@@ -1,4 +1,4 @@
-class CachedImages {
+class CachedImage {
   int id;
   String name;
   String localPath;
@@ -8,7 +8,7 @@ class CachedImages {
   DateTime? syncedAt;
   String syncAction; // 'create', 'update', 'delete'
 
-  CachedImages({
+  CachedImage({
     required this.id,
     required this.name,
     required this.localPath,
