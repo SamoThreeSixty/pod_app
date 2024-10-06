@@ -1,5 +1,6 @@
 class CachedData {
   int id;
+  String table;
   String data;
   DateTime createdAt;
   bool isSynced;
@@ -8,6 +9,7 @@ class CachedData {
 
   CachedData({
     required this.id,
+    required this.table,
     required this.data,
     required this.createdAt,
     this.isSynced = false,
