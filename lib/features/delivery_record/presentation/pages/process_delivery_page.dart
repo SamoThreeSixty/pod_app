@@ -173,7 +173,19 @@ class _ProcessDeliveryPageState extends State<ProcessDeliveryPage> {
             child: BlocBuilder<DeliveryDetailBloc, DeliveryDetailState>(
               builder: (context, state) {
                 if (state is SaveSignatureAndImagesLoading) {
-                  return const Text("Im loading");
+                  return const load
+                }
+
+                if (state is SaveSignatureAndImagesFailure) {
+                  return const Column(
+                    children: [Text("Failure"), Text("Reason:")],
+                  );
+                }
+
+                if (state is SaveSignatureAndImagesSuccess) {
+                  return const Column(
+                    children: [Text("Success")],
+                  );
                 }
 
                 return Column(

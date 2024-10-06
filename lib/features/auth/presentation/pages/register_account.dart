@@ -4,8 +4,8 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:pod_app/core/usecase/auth/presentation/bloc/auth_bloc.dart';
-import 'package:pod_app/core/usecase/auth/presentation/widgets/auth_field.dart';
+import 'package:pod_app/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:pod_app/features/auth/presentation/widgets/auth_field.dart';
 import 'package:pod_app/main.dart';
 
 class SignupPage extends StatefulWidget {

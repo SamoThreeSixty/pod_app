@@ -2,7 +2,7 @@ import 'dart:developer';
 
 import 'package:gotrue/src/types/user.dart';
 import 'package:pod_app/core/event/events.dart';
-import 'package:pod_app/core/usecase/auth/data/datasources/auth_datasources.dart';
+import 'package:pod_app/features/auth/data/datasources/auth_datasources.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 // Event Log
