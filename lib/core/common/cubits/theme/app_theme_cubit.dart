@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-part 'app_them_state.dart';
-
 class ThemeCubit extends Cubit<ThemeMode> {
   static const String _themeKey = 'isDarkMode';
 
