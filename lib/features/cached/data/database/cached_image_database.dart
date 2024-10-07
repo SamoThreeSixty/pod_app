@@ -52,7 +52,7 @@ class CachedImageDatabase {
     final db = await instance.database;
 
     return await db.insert(
-      'cached_images',
+      tableCachedImages,
       imageDTO.toJson(),
       conflictAlgorithm: ConflictAlgorithm.replace,
     );
@@ -64,7 +64,7 @@ class CachedImageDatabase {
     const orderBy = '${CachedImageFields.id} ASC';
 
     final List<Map<String, dynamic>> result =
-        await db.query('cached_images', orderBy: orderBy);
+        await db.query(tableCachedImages, orderBy: orderBy);
 
     return result.map((json) => CachedImageDto.fromJson(json)).toList();
   }
