@@ -58,7 +58,7 @@ class CachedRepositoryImp implements CachedRepository {
   @override
   Future<Either<Failure, List<CachedImage>>> getAllCachedImages() async {
     try {
-      final res = await cachedRemoteDataSource.getAllCachedImages();
+      final res = await cachedLocalDataSource.getAllCachedImages();
       return right(res);
     } catch (e) {
       return left(

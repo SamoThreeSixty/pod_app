@@ -13,6 +13,13 @@ import 'package:pod_app/features/auth/domain/usecase/sign_in_with_email_password
 import 'package:pod_app/features/auth/domain/usecase/sign_out.dart';
 import 'package:pod_app/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:pod_app/features/auth/presentation/pages/login_page.dart';
+import 'package:pod_app/features/cached/data/datasource/cached_local_datasource.dart';
+import 'package:pod_app/features/cached/data/datasource/cached_remote_datasource.dart';
+import 'package:pod_app/features/cached/data/repository/cached_repository_imp.dart';
+import 'package:pod_app/features/cached/domain/usecase/add_cached_data.dart';
+import 'package:pod_app/features/cached/domain/usecase/add_cached_image.dart';
+import 'package:pod_app/features/cached/domain/usecase/get_all_cached_images.dart';
+import 'package:pod_app/features/cached/provider/bloc/cached_bloc.dart';
 import 'package:pod_app/features/delivery_list/data/datasources/delivery_remote_datasource.dart';
 import 'package:pod_app/features/delivery_list/data/repository/delivery_list_repository_imp.dart';
 import 'package:pod_app/features/delivery_list/domain/repository/delivery_header_repository.dart';
@@ -102,6 +109,28 @@ void main() async {
               EventLogRepositoryImp(
                 eventLogRemoteDataSource: EventLogRemoteDataSourceImp(),
                 eventLogLocalDataSource: EventLogLocalDataSourceImp(),
+              ),
+            ),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => CachedBloc(
+            addCachedData: AddCachedData(
+              CachedRepositoryImp(
+                cachedLocalDataSource: CachedLocalDataSource(),
+                cachedRemoteDataSource: CachedRemoteDataSource(),
+              ),
+            ),
+            addCachedImage: AddCachedImage(
+              CachedRepositoryImp(
+                cachedLocalDataSource: CachedLocalDataSource(),
+                cachedRemoteDataSource: CachedRemoteDataSource(),
+              ),
+            ),
+            getAllCachedImages: GetAllCachedImages(
+              CachedRepositoryImp(
+                cachedLocalDataSource: CachedLocalDataSource(),
+                cachedRemoteDataSource: CachedRemoteDataSource(),
               ),
             ),
           ),
