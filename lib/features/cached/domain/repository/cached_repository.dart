@@ -15,4 +15,6 @@ abstract interface class CachedRepository {
 
   // Will just do all of it for now. Will return an int of how many synced
   Future<Either<Failure, int>> syncCachedImages();
+
+  Future<Either<Failure, List<CachedImage>>> getAllCachedImages();
 }

@@ -54,4 +54,18 @@ class CachedRepositoryImp implements CachedRepository {
     // TODO: implement syncCachedImages
     throw UnimplementedError();
   }
+
+  @override
+  Future<Either<Failure, List<CachedImage>>> getAllCachedImages() async {
+    try {
+      final res = await cachedRemoteDataSource.getAllCachedImages();
+      return right(res);
+    } catch (e) {
+      return left(
+        Failure(
+          e.toString(),
+        ),
+      );
+    }
+  }
 }
