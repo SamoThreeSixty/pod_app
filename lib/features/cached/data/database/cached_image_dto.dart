@@ -75,21 +75,21 @@ class CachedImageDto {
 
   static CachedImage fromJson(Map<String, Object?> json) => CachedImage(
         id: json['_id'] as int,
-        name: json['_name'] as String,
-        localPath: json['_localPath'] as String,
-        createdAt: json['_createdAt'] as DateTime,
-        isSynced: json['_isSynced'] as bool,
-        syncedAt: json['_syncedAt'] as DateTime,
-        syncAction: json['_syncAction'] as String,
+        name: json['name'] as String,
+        localPath: json['localPath'] as String,
+        createdAt: DateTime.parse(json['createdAt'] as String),
+        isSynced: json['isSynced'] as bool,
+        syncedAt: DateTime.parse(json['eventDate'] as String),
+        syncAction: json['syncAction'] as String,
       );
 
   Map<String, Object?> toJson() => {
         CachedImageFields.id: id,
         CachedImageFields.name: name,
         CachedImageFields.localPath: localPath,
-        CachedImageFields.createdAt: createdAt,
+        CachedImageFields.createdAt: createdAt!.toIso8601String(),
         CachedImageFields.isSynced: isSynced,
-        CachedImageFields.syncedAt: syncedAt,
+        CachedImageFields.syncedAt: syncedAt!.toIso8601String(),
         CachedImageFields.syncAction: syncAction,
       };
 }

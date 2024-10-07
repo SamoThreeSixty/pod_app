@@ -75,21 +75,21 @@ class CachedDataDto {
 
   static CachedData fromJson(Map<String, Object?> json) => CachedData(
         id: json['_id'] as int,
-        table: json['_table'] as String,
-        data: json['_data'] as String,
-        createdAt: json['_createdAt'] as DateTime,
-        isSynced: json['_isSynced'] as bool,
-        syncedAt: json['_syncedAt'] as DateTime,
-        syncAction: json['_syncAction'] as String,
+        table: json['table'] as String,
+        data: json['data'] as String,
+        createdAt: DateTime.parse(json['createdAt'] as String),
+        isSynced: json['isSynced'] as bool,
+        syncedAt: DateTime.parse(json['syncedAt'] as String),
+        syncAction: json['syncAction'] as String,
       );
 
   Map<String, Object?> toJson() => {
         CachedDataFields.id: id,
         CachedDataFields.table: table,
         CachedDataFields.data: data,
-        CachedDataFields.createdAt: createdAt,
+        CachedDataFields.createdAt: createdAt!.toIso8601String(),
         CachedDataFields.isSynced: isSynced,
-        CachedDataFields.syncedAt: syncedAt,
+        CachedDataFields.syncedAt: syncedAt!.toIso8601String(),
         CachedDataFields.syncAction: syncAction,
       };
 }
