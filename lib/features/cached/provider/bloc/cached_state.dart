@@ -7,16 +7,24 @@ final class CachedInitial extends CachedState {}
 
 // Data
 
-class CachedDataLoaded implements CachedState {}
+final class CachedDataLoaded implements CachedState {}
 
-class CachedDataLoading implements CachedState {}
+final class CachedDataLoading implements CachedState {}
 
-class CachedDataFailure implements CachedState {}
+final class CachedDataFailure implements CachedState {}
 
 // Images
 
-class CachedImagesLoaded implements CachedState {}
+final class CachedImagesLoaded implements CachedState {
+  final List<CachedImage> cachedImages;
 
-class CachedImagesLoading implements CachedState {}
+  CachedImagesLoaded(this.cachedImages);
+}
 
-class CachedImagesFailure implements CachedState {}
+final class CachedImagesLoading implements CachedState {}
+
+final class CachedImagesFailure implements CachedState {
+  final String message;
+
+  CachedImagesFailure(this.message);
+}
