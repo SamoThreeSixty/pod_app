@@ -13,13 +13,13 @@ class CachedImageModel extends CachedImage {
 
   factory CachedImageModel.fromJson(Map<String, dynamic> json) {
     return CachedImageModel(
-      id: json['id'] as int? ?? 0,
-      name: json['name'] as String? ?? '',
-      localPath: json['localPath'] as String? ?? '',
-      createdAt: json['createdAt'] as DateTime? ?? DateTime.now(),
-      isSynced: json['isSynced'] as bool? ?? false,
-      syncedAt: json['syncedAt'] as DateTime?,
-      syncAction: json['syncAction'] as String? ?? '',
+      id: json['id'],
+      name: json['name'],
+      localPath: json['localPath'],
+      createdAt: json['createdAt'],
+      isSynced: json['isSynced'],
+      syncedAt: json['syncedAt'],
+      syncAction: json['syncAction'],
     );
   }
 }
