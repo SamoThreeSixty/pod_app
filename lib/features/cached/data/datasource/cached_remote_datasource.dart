@@ -26,4 +26,10 @@ class CachedRemoteDataSource implements CachedDataSource {
     // TODO: implement syncCachedImages
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<CachedImage>> getAllCachedImages() {
+    // TODO: implement getAllCachedImages
+    throw UnimplementedError();
+  }
 }

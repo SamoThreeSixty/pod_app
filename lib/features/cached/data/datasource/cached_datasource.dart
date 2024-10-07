@@ -9,4 +9,6 @@ abstract interface class CachedDataSource {
   Future<int> syncCachedData();
 
   Future<int> syncCachedImages();
+
+  Future<List<CachedImage>> getAllCachedImages();
 }

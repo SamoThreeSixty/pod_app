@@ -44,4 +44,17 @@ class CachedLocalDataSource implements CachedDataSource {
     // TODO: implement syncCachedImages
     throw UnimplementedError();
   }
+
+  @override
+  Future<List<CachedImage>> getAllCachedImages() async {
+    try {
+      var db = CachedImageDatabase.instance;
+
+      final cachedImages = await db.fetchAllCachedImages();
+
+      return cachedImages;
+    } catch (e) {
+      throw Exception("Failed to get all cached images: $e");
+    }
+  }
 }
