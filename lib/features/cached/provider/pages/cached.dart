@@ -32,6 +32,10 @@ class _CachedPageState extends State<CachedPage> {
           BlocBuilder<CachedBloc, CachedState>(
             builder: (context, state) {
               debugger();
+              if (state is CachedImagesLoaded) {
+                return const Text("All loaded");
+              }
+
               if (state is CachedImagesLoading) {
                 return const Text("loading");
               }
