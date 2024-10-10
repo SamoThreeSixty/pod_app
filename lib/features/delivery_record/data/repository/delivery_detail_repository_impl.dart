@@ -85,7 +85,7 @@ class DeliveryDetailRepositoryImpl implements DeliveryDetailRepository {
           syncedAt: null,
         );
 
-        CachedImageDatabase.instance.insertCachedImage(cachedImageDto);
+        CachedImageDatabase().insertCachedImage(cachedImageDto);
       } else {
         // Save to external and local
         await deliveryDetailLocalDateSourceImp.saveSignature(path, deliveryID);

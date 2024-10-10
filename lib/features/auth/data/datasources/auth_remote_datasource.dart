@@ -29,7 +29,7 @@ class AuthRemoteDataSourceImp implements AuthDataSource {
         UserID: 0,
       );
 
-      EventLogDatabase.instance.create(eventLog);
+      EventLogDatabase().create(eventLog);
 
       return response.user!;
     } catch (e) {
@@ -50,7 +50,7 @@ class AuthRemoteDataSourceImp implements AuthDataSource {
         UserID: 0,
       );
 
-      EventLogDatabase.instance.create(eventLog);
+      EventLogDatabase().create(eventLog);
     } catch (e) {
       throw const ServerException('Failed to log out');
     }

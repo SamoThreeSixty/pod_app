@@ -10,7 +10,7 @@ class CachedLocalDataSource implements CachedDataSource {
   @override
   Future<void> addCachedData(CachedData cachedData) async {
     try {
-      var db = CachedDataDatabase.instance;
+      var db = CachedDataDatabase();
 
       await db.insertCachedImage(
         CachedDataDto.fromEntity(cachedData),
@@ -23,7 +23,7 @@ class CachedLocalDataSource implements CachedDataSource {
   @override
   Future<void> addCachedImage(CachedImage cachedImage) async {
     try {
-      var db = CachedImageDatabase.instance;
+      var db = CachedImageDatabase();
 
       await db.insertCachedImage(
         CachedImageDto.fromEntity(cachedImage),
@@ -48,9 +48,9 @@ class CachedLocalDataSource implements CachedDataSource {
   @override
   Future<List<CachedImage>> getAllCachedImages() async {
     try {
-      var db = CachedImageDatabase.instance;
+      var db = CachedImageDatabase();
 
-      final cachedImages = await db.fetchAllCachedImages();
+      final List<CachedImage> cachedImages = await db.fetchAllCachedImages();
 
       return cachedImages;
     } catch (e) {
