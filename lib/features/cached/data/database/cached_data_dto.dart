@@ -89,7 +89,7 @@ class CachedDataDto {
         CachedDataFields.data: data,
         CachedDataFields.createdAt: createdAt!.toIso8601String(),
         CachedDataFields.isSynced: isSynced,
-        CachedDataFields.syncedAt: syncedAt!.toIso8601String(),
+        CachedDataFields.syncedAt: syncedAt?.toIso8601String(),
         CachedDataFields.syncAction: syncAction,
       };
 }
