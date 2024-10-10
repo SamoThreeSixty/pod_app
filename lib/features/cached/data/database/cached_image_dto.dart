@@ -78,7 +78,7 @@ class CachedImageDto {
         name: json['name'] as String,
         localPath: json['localPath'] as String,
         createdAt: DateTime.parse(json['createdAt'] as String),
-        isSynced: json['isSynced'] as bool,
+        isSynced: json['isSynced'] == 1 ? true : false,
         syncedAt: DateTime.parse(json['eventDate'] as String),
         syncAction: json['syncAction'] as String,
       );
@@ -88,8 +88,9 @@ class CachedImageDto {
         CachedImageFields.name: name,
         CachedImageFields.localPath: localPath,
         CachedImageFields.createdAt: createdAt!.toIso8601String(),
-        CachedImageFields.isSynced: isSynced,
-        CachedImageFields.syncedAt: syncedAt!.toIso8601String(),
+        CachedImageFields.isSynced: isSynced == true ? 1 : 0,
+        CachedImageFields.syncedAt:
+            syncedAt == null ? '' : syncedAt?.toIso8601String(),
         CachedImageFields.syncAction: syncAction,
       };
 }
