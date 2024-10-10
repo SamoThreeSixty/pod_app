@@ -9,7 +9,7 @@ class EventLogLocalDataSourceImp implements EventLogDataSource {
   @override
   Future<List<EventLog>> getAllEventLogs() async {
     try {
-      var db = EventLogDatabase.instance;
+      var db = EventLogDatabase();
       final List<EventLog> eventLogs = await db.getList();
       return eventLogs;
     } catch (e) {
